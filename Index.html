@@ -1,0 +1,4516 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en"><head>
+
+
+
+  
+  <meta charset="utf-8"><title>plantilla para codificar</title>
+  
+
+  
+  
+  <link href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" rel="stylesheet">
+
+  
+  <style>
+.ui-combobox {
+position: relative;
+display: inline-block;
+}
+.ui-combobox-toggle {
+position: absolute;
+top: 0;
+bottom: 0;
+margin-left: -1px;
+padding: 0;
+/* support: IE7 */
+*height: 1.7em;
+*top: 0.1em;
+}
+.ui-combobox-input {
+margin: 0;
+padding: 0.3em;
+}
+  </style>
+  
+  <meta charset="utf-8">
+
+  
+  <meta charset="utf-8">
+
+  
+  <meta charset="utf-8"></head><body>
+<div style="position: absolute; left: 8px; top: 8px; width: 1597px;"><small><big><a name="regresar"></a><a href="https://sites.google.com/totalplay.com.mx/ccst/soporte-t%C3%A9cnico" target="_blank">INTRANET</a> &nbsp; <a href="http://ux.totalplay.com.mx/UXKeyDSI/buscarcuenta" target="_blank">SOPORTE</a>&nbsp;
+&nbsp;
+<a href="https://dashboard.totalplay.com.mx/" target="_blank">DASHBOARD</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="http://10.216.8.219/UXKeyDSI/" target="_blank">UX</a>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="https://sites.google.com/totalplay.com.mx/incidenciasst/incidencias-soporte" target="_blank">INCIDENCIAS</a>&nbsp;&nbsp; <a href="http://10.213.8.214/ControlRemoto2/" target="_blank">CONTROL
+REMOTO</a> &nbsp;&nbsp;
+<a href="https://10.213.8.251/TPADMINWeb" target="_blank">IPTV</a>
+&nbsp;&nbsp;&nbsp;&nbsp; <a href="https://totalplay.chat/gestoriptv/" target="_blank">GESTOR
+IPTV</a> &nbsp; &nbsp;&nbsp; <a href="https://totalplay.chat/gestor2000/" target="_blank">GESTOR
+U2000
+</a>&nbsp;&nbsp; &nbsp;&nbsp; </big>&nbsp;&nbsp;
+<big><a href="https://cariai.com/agentui/" target="_blank">CHAT</a>
+&nbsp; &nbsp;&nbsp;
+&nbsp;&nbsp; <a href="http://sie.totalplay.com.mx/totalplay/CallCenter/Parrilladecanales/Documents/Forms/AllItems.aspx">CANALES</a>
+&nbsp; &nbsp; &nbsp;</big></small><small><big> <a target="_blank" href="https://sns.ift.org.mx:8081/sns-frontend/consulta-numeracion/numeracion-geografica.xhtml">IFT</a></big></small><small><big>
+&nbsp; &nbsp;</big></small><small><big>
+</big></small><small><big><a href="https://10.216.8.106/sistemadeevaluacion/" target="_blank">CALIDAD</a>
+</big></small><small><big>&nbsp; &nbsp;
+<a href="https://web.telegram.org/z/" target="_blank">TELEGRAM</a>&nbsp;&nbsp;
+<a href="https://mitotalplay.com.mx/" target="_blank">MITOTALPLAY</a></big></small><br>
+</div>
+
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="#INTERNET">-INTERNET</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="#Totalshop">-TOTALSHOP</a><br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="#TELEFONO">-TELEFONO</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="#TELEVISION">-TELEVISION</a><br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="#PLANTILLAS_PARA_GESTOR_IPTV">-PLANTILLAS GESTOR</a><br>
+
+<div class="collapse navbar-collapse">
+<ul style="font-family: Arial;" class="nav navbar-nav">
+</ul>
+</div>
+
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
+<script>
+(function( $ ) {
+$.widget( "ui.combobox", {
+_create: function() {
+var input,
+that = this,
+wasOpen = false,
+select = this.element.hide(),
+selected = select.children( ":selected" ),
+value = selected.val() ? selected.text() : "",
+wrapper = this.wrapper = $( "<span>" )
+.addClass( "ui-combobox" )
+.insertAfter( select );
+function removeIfInvalid( element ) {
+var value = $( element ).val(),
+matcher = new RegExp( "^" + $.ui.autocomplete.escapeRegex( value ) + "$", "i" ),
+valid = false;
+select.children( "option" ).each(function() {
+if ( $( this ).text().match( matcher ) ) {
+this.selected = valid = true;
+return false;
+}
+});
+if ( !valid ) {
+// remove invalid value, as it didn't match anything
+$( element )
+.val( "" )
+.attr( "title", value + " dato no valido" )
+.tooltip( "open" );
+select.val( "" );
+setTimeout(function() {
+input.tooltip( "close" ).attr( "title", "" );
+}, 2500 );
+input.data( "ui-autocomplete" ).term = "";
+}
+}
+input = $( "<input>" )
+.appendTo( wrapper )
+.val( value )
+.attr( "title", "" )
+.addClass( "ui-state-default ui-combobox-input" )
+.autocomplete({
+delay: 0,
+minLength: 0,
+source: function( request, response ) {
+var matcher = new RegExp( $.ui.autocomplete.escapeRegex(request.term), "i" );
+response( select.children( "option" ).map(function() {
+var text = $( this ).text();
+if ( this.value && ( !request.term || matcher.test(text) ) )
+return {
+label: text.replace(
+new RegExp(
+"(?![^&;]+;)(?!<[^<>]*)(" +
+$.ui.autocomplete.escapeRegex(request.term) +
+")(?![^<>]*>)(?![^&;]+;)", "gi"
+), "<strong>$1</strong>" ),
+value: text,
+option: this
+};
+}) );
+},
+select: function( event, ui ) {
+ui.item.option.selected = true;
+that._trigger( "selected", event, {
+item: ui.item.option
+});
+},
+change: function( event, ui ) {
+if ( !ui.item ) {
+removeIfInvalid( this );
+}
+}
+})
+.addClass( "ui-widget ui-widget-content ui-corner-left" );
+input.data( "ui-autocomplete" )._renderItem = function( ul, item ) {
+return $( "<li>" )
+.append( "<a>" + item.label + "</a>" )
+.appendTo( ul );
+};
+$( "<a>" )
+.attr( "tabIndex", -1 )
+.attr( "title", "Selecciona una opcion" )
+.tooltip()
+.appendTo( wrapper )
+.button({
+icons: {
+primary: "ui-icon-triangle-1-s"
+},
+text: false
+})
+.removeClass( "ui-corner-all" )
+.addClass( "ui-corner-right ui-combobox-toggle" )
+.mousedown(function() {
+wasOpen = input.autocomplete( "widget" ).is( ":visible" );
+})
+.click(function() {
+input.focus();
+// close if already visible
+if ( wasOpen ) {
+return;
+}
+// pass empty string as value to search for, displaying all results
+input.autocomplete( "search", "" );
+});
+input.tooltip({
+tooltipClass: "ui-state-highlight"
+});
+},
+_destroy: function() {
+this.wrapper.remove();
+this.element.show();
+}
+});
+})( jQuery );
+$(function() {
+$( "#combobox" ).combobox();
+});
+</script><br>
+
+<div class="ui-widget"> <label>Lista de opciones
+para codificar: </label>
+<select id="combobox">
+<option value=" Seleccione una opcion "> Seleccione una opcion </option>
+<option value="CFO individual"> CFO individual </option>
+<option value="falla en cable de red"> falla en cable de red </option>
+<option value="Intermitencias en wifi"> Intermitencias en wifi </option>
+<option value="llamada sin audio se da script de calidad "> llamada sin
+audio se da script de calidad </option>
+<option value="no enciende  stb"> no enciende stb </option>
+<option value="no enciende ont"> no enciende ont </option>
+<option value="No navega"> No navega </option>
+<option value="ont no enciende"> ont no enciende </option>
+<option value="quiere cancelar el servicio "> quiere cancelar el
+servicio </option>
+<option value="se corta llamada"> se corta llamada </option>
+<option value="se reinicia ont"> se reinicia ont </option>
+<option value="se reinicia stb"> se reinicia stb </option>
+<option value="sin linea de telefono"> sin linea de telefono </option>
+<option value="sin ningun servicio"> sin ningun servicio </option>
+<option value="sin señal del stb"> sin señal del stb </option>
+<option value="tono de ocupado"> tono de ocupado </option>
+<option value="error de aprovisionamiento"> error de aprovisionamiento </option>
+<option value="ont cancelada por cambio de  plan , se aplica  reaprovisionamiento desde ux para activar">
+ont cancelada por cambio de plan , se aplica reaprovisionamiento desde
+ux para activar </option>
+<option value="a peticion del cliente se reagenda la visita  "> a
+peticion del cliente se reagenda la visita </option>
+<option value="Actualmente tiene ip nateada , y si factura su ip fija">
+Actualmente tiene ip nateada , y si factura su ip fija </option>
+<option value="al  presionar  el  boton  de  menu  muestra  la  fecha/hora ">
+al presionar el boton de menu muestra la fecha/hora </option>
+<option value="Al ingresar a netflix del stb  se queda cargando con un circulo">
+Al ingresar a netflix del stb se queda cargando con un circulo </option>
+<option value="al sondear no presenta fallas  servicio  correcto // se le pide que llame cuando se presenta la falla">
+al sondear no presenta fallas servicio correcto // se le pide que llame
+cuando se presenta la falla </option>
+<option value="algunas funciones están deshabilitadas. El servicio se reestablecerá automáticamente (safe mode) ">
+algunas funciones están deshabilitadas. El servicio se reestablecerá
+automáticamente (safe mode) </option>
+<option value="algunos canales estan en negro"> algunos canales estan
+en negro </option>
+<option value="algunos canales están en negro // es posible reproducir anytime  y Youtube //  no tiene audio //   cambia de canal // reiniciar  el stb // SIN ALGUNOS CANALES/MULTICAST">
+algunos canales están en negro // es posible reproducir anytime y
+Youtube // no tiene audio // cambia de canal // reiniciar el stb // SIN
+ALGUNOS CANALES/MULTICAST </option>
+<option value="algunos canales están en negro // es posible reproducir anytime  y Youtube //  si tiene audio //  SIN ALGUNO CANALES/AUDIO ">
+algunos canales están en negro // es posible reproducir anytime y
+Youtube // si tiene audio // SIN ALGUNO CANALES/AUDIO </option>
+<option value="audio distorsionado // si soporta Dolby 5.1 // hdmi  bien conectado //  se pide conectar el decodificador con el otro cable hdmi // N2 SIN AUDIO / se escala ">
+audio distorsionado // si soporta Dolby 5.1 // hdmi bien conectado //
+se pide conectar el decodificador con el otro cable hdmi // N2 SIN
+AUDIO / se escala </option>
+<option value="Audio/Imagen desfasados // no se replica en maqueta // Pasa en todos los canales // reiniciar stb // SIN AUDIO O IMAGEN DESFASADA">
+Audio/Imagen desfasados // no se replica en maqueta // Pasa en todos
+los canales // reiniciar stb // SIN AUDIO O IMAGEN DESFASADA </option>
+<option value="cambio de tv digital a una analoga // no tiene cable rca , se envia vt sin costo para proporcionar cable  ">
+cambio de tv digital a una analoga // no tiene cable rca , se envia vt
+sin costo para proporcionar cable </option>
+<option value="canal bloqueado por clasificacion baja // se cambia de perfil  ">
+canal bloqueado por clasificacion baja // se cambia de perfil </option>
+<option value="Cliente reporta que  recibio información para activar ed 5G">
+Cliente reporta que recibio información para activar ed 5G </option>
+<option value="codigo de error tiempo de espera  agotado presionado  ok">
+codigo de error tiempo de espera agotado presionado ok </option>
+<option value="comenta que  tiene  Internet lento  en general en todos los equipos // ">
+comenta que tiene Internet lento en general en todos los equipos // </option>
+<option value="contenido no disponible en anytime "> contenido no
+disponible en anytime </option>
+<option value="cuenta cancelada se transfiere  a SAC"> cuenta cancelada
+se transfiere a SAC </option>
+<option value="desconectar el cable de red y conectarlo nuevamente">
+desconectar el cable de red y conectarlo nuevamente </option>
+<option value="el cable de FO esta dañado  dentro del domicilio// se envia vt posible costo al estado de cuenta  por daño // el titular acepta ">
+el cable de FO esta dañado dentro del domicilio// se envia vt posible
+costo al estado de cuenta por daño // el titular acepta </option>
+<option value="el cable de telefono esta conectado de forma incorrecta // se cambia el cable de tel 2 a tel 1">
+el cable de telefono esta conectado de forma incorrecta // se cambia el
+cable de tel 2 a tel 1 </option>
+<option value="el cliente  no responde  se da script de calidad "> el
+cliente no responde se da script de calidad </option>
+<option value="el paquete cargado en IPTV coincide con la OLT a la que pertenece el cliente.">
+el paquete cargado en IPTV coincide con la OLT a la que pertenece el
+cliente. </option>
+<option value="en el folio de visita tecnica por CFO se detecta  splitter atenuado se le pide tiempo de espera el folio  lo atiende  planta  externa">
+en el folio de visita tecnica por CFO se detecta splitter atenuado se
+le pide tiempo de espera el folio lo atiende planta externa </option>
+<option value="en la app de totalgo si puede hacer y recibir llamadas sin problemas ">
+en la app de totalgo si puede hacer y recibir llamadas sin problemas </option>
+<option value="en las apps  como youtube no tiene audio  // se reinicia el stb">
+en las apps como youtube no tiene audio // se reinicia el stb </option>
+<option value="en las apps  como youtube si tiene audio  // la falla  no es el cable  hdmi // se escala reporta">
+en las apps como youtube si tiene audio // la falla no es el cable hdmi
+// se escala reporta </option>
+<option value="en tel1 no da tono // se cambia POT a tel2"> en tel1 no
+da tono // se cambia POT a tel2 </option>
+<option value="error contenido  no disponible   en hbo despues de ponerle play a cualquier  pelicula">
+error contenido no disponible en hbo despues de ponerle play a
+cualquier pelicula </option>
+<option value="error codigo 1 tu dispositivo no cuenta con servicio de  tv">
+error codigo 1 tu dispositivo no cuenta con servicio de tv </option>
+<option value="error de aprovisionamiento codigo -1 tu dispositivo no  esta registrado en totalplay ">
+error de aprovisionamiento codigo -1 tu dispositivo no esta registrado
+en totalplay </option>
+<option value="error de aprovisionamiento codigo 1 tu dispositivo no cuenta con servicio de television">
+error de aprovisionamiento codigo 1 tu dispositivo no cuenta con
+servicio de television </option>
+<option value="es falla general se le pide tiempo de espera"> es falla
+general se le pide tiempo de espera </option>
+<option value="es posible reproducir contenido Anytime y Netflix/YouTube "> es
+posible reproducir contenido Anytime y Netflix/YouTube </option>
+<option value="esta en run collection se  reinicia la ont"> esta en run
+collection se reinicia la ont </option>
+<option value="esta pantalla no cargo correctamente //paquete  y perfiles  en iptv // presiona ok sin éxito // reinicia stb // des-conecta cable de red  // ">
+esta pantalla no cargo correctamente //paquete y perfiles en iptv //
+presiona ok sin éxito // reinicia stb // des-conecta cable de red // </option>
+<option value="falla es en todos los juegos en linea  "> falla es en
+todos los juegos en linea </option>
+<option value="guia desfasada // programa  actual  no  coincide  con  la guia o unas horas antes o unas horas después // es de Tijuana, Ciudad Juarez o Cancún // se indica que es un comportamiento normal, ya que la guia se basa en el horario  de la CDMX // ">
+guia desfasada // programa actual no coincide con la guia o unas horas
+antes o unas horas después // es de Tijuana, Ciudad Juarez o Cancún //
+se indica que es un comportamiento normal, ya que la guia se basa en el
+horario de la CDMX // </option>
+<option value="informacion del registro de amazon prime"> informacion
+del registro de amazon prime </option>
+<option value="intermitencias en audio en todos los canales">
+intermitencias en audio en todos los canales </option>
+<option value="intermitencias en la ont  se apaga en automatico ">
+intermitencias en la ont se apaga en automatico </option>
+<option value="intermitencias en las apps del stb  "> intermitencias en
+las apps del stb </option>
+<option value="intermitencias en los tres servicios"> intermitencias en
+los tres servicios </option>
+<option value="intermitencias wifi del stb "> intermitencias wifi del
+stb </option>
+<option value="internet funciona correctamente"> internet funciona
+correctamente </option>
+<option value="Internet lento  por cable de red "> Internet lento por
+cable de red </option>
+<option value="Internet lento  por wifi  "> Internet lento por wifi </option>
+<option value="la falla la tiene en todos los stbs"> la falla la tiene
+en todos los stbs </option>
+<option value="La ip la requiere  en modo router , se escala a n2 para la activacion  ">
+La ip la requiere en modo router , se escala a n2 para la activacion </option>
+<option value="la marcación esta incorrecta  // se le pide que marque a 10dig">
+la marcación esta incorrecta // se le pide que marque a 10dig </option>
+<option value="la ont esta apagada / se enciende "> la ont esta apagada
+/ se enciende </option>
+<option value="le pide que  inicie sesion  con una cuenta de  google">
+le pide que inicie sesion con una cuenta de google </option>
+<option value="le se recomienda usar la red 5g para navegar al máximo de velocidad">
+le se recomienda usar la red 5g para navegar al máximo de velocidad </option>
+<option value="llama de la linea  se le pide  validar // se avisa que se cortara la llamada">
+llama de la linea se le pide validar // se avisa que se cortara la
+llamada </option>
+<option value="Mensaje de actualiza tu forma de pago"> Mensaje de
+actualiza tu forma de pago </option>
+<option value="mensaje de error nw  en netflix del stb"> mensaje de
+error nw en netflix del stb </option>
+<option value="mensaje de informacion para el instalador en tv">
+mensaje de informacion para el instalador en tv </option>
+<option value="niveles de  potencia  incorrecto se envia visita tecnica">
+niveles de potencia incorrecto se envia visita tecnica </option>
+<option value="no abre la app de amazon // no cuenta con la versión correcta // se reinicia  stb // se aplica  factory reset // N2 NO ABRE LA AP / se escala">
+no abre la app de amazon // no cuenta con la versión correcta // se
+reinicia stb // se aplica factory reset // N2 NO ABRE LA AP / se escala
+</option>
+<option value="no cambia el stb con el control  remoto // se presiona el boton de stb  del control remoto para sincronizar">
+no cambia el stb con el control remoto // se presiona el boton de stb
+del control remoto para sincronizar </option>
+<option value="no carga la app de totalplay en su celular / se pide  volver a instalar  la app // se pide probar con otro celular // se pide  borrar cookies y datos de la app">
+no carga la app de totalplay en su celular / se pide volver a instalar
+la app // se pide probar con otro celular // se pide borrar cookies y
+datos de la app </option>
+<option value="no entran llamadas de numeros locales // de celulares si entran //">
+no entran llamadas de numeros locales // de celulares si entran // </option>
+<option value="no es compatible a la red  5g"> no es compatible a la
+red 5g </option>
+<option value="no esta en sitio  llamara despues"> no esta en sitio
+llamara despues </option>
+<option value="no esta registrado en  iptv   // se genera inconsistencia  y se pasan datos a gestor  para  stb   correctamente  ">
+no esta registrado en iptv // se genera inconsistencia y se pasan datos
+a gestor para stb correctamente </option>
+<option value="no fueron los tecnicos en el horario acordado // se reagenda a la fecha mas proxima">
+no fueron los tecnicos en el horario acordado // se reagenda a la fecha
+mas proxima </option>
+<option value="no funciona e control remoto "> no funciona e control
+remoto </option>
+<option value="no responde el stb al contro remoto   // se presiona  el botón stb para sincronizar  ">
+no funciona e control remoto // se presiona el botón stb para
+sincronizar </option>
+<option value="no han llegado los tecnicos //  se le pide tiempo de espera ">
+no han llegado los tecnicos // se le pide tiempo de espera </option>
+<option value="no hay codificación para este caso  "> no hay
+codificación para este caso </option>
+<option value="no he llegado el control remoto  que solicito // se le pide tiempo de espera  , la entrega esta en curso ">
+no he llegado el control remoto que solicito // se le pide tiempo de
+espera , la entrega esta en curso </option>
+<option value="no navega en algunas  paginas  "> no navega en algunas
+paginas </option>
+<option value="no navega en algunos equipos"> no navega en algunos
+equipos </option>
+<option value="No navega en un equipo"> No navega en un equipo </option>
+<option value="no presenta fallas // servicio  funcionando correctamente"> no
+presenta fallas // servicio funcionando correctamente </option>
+<option value="no puede hacer pruebas en este momento llamara mas tarde">
+no puede hacer pruebas en este momento llamara mas tarde </option>
+<option value="no puede hacerlo desde la app o portal marca errror , se apoya por atencion al cliente  ">
+no puede hacerlo desde la app o portal marca errror , se apoya por
+atencion al cliente </option>
+<option value="no puede ingresar a la app de total go"> no puede
+ingresar a la app de total go </option>
+<option value="no puede ingresar a la ont con root y admin // se aplica reset de fabrica a las credenciales de la ont ">
+no puede ingresar a la ont con root y admin // se aplica reset de
+fabrica a las credenciales de la ont </option>
+<option value="no puede ver videos  en youtube  "> no puede ver videos
+en youtube </option>
+<option value="no se puede ingresar a la ont para hacer ts  /tiene indicadores en rojo//  se aplica reaprovisionamiento / ">
+no se puede ingresar a la ont para hacer ts /tiene indicadores en
+rojo// se aplica reaprovisionamiento / </option>
+<option value="no se puede ver si tiene servicios digitales  // se aplica reset de fabrica // ">
+no se puede ver si tiene servicios digitales // se aplica reset de
+fabrica // </option>
+<option value="no tiene  paquete  en iptv, // se genera inconsistencia  y se pasan datos a gestor  para cargar parrilla correcta">
+no tiene paquete en iptv, // se genera inconsistencia y se pasan datos
+a gestor para cargar parrilla correcta </option>
+<option value="no tiene  perfiles // se pasan datos a gestor para configurar en iptv">
+no tiene perfiles // se pasan datos a gestor para configurar en iptv </option>
+<option value="no tiene  telefono conectado // se conecta cable de telefono en la ont  ">
+no tiene telefono conectado // se conecta cable de telefono en la ont </option>
+<option value="no tiene acceso remoto a su servidor"> no tiene acceso
+remoto a su servidor </option>
+<option value="no tiene algunos  canales "> no tiene algunos canales </option>
+<option value="no tiene direccionamiento de internet"> no tiene
+direccionamiento de internet </option>
+<option value="no tiene la portabilidad"> no tiene la portabilidad </option>
+<option value="no tiene la portabilidad // factura el telefono que porto pero en ux  tiene  otro numero que totalplay le asigno en el contrato // se aplica  reaprovisionamiento">
+no tiene lno tiene la portabilidad // factura el telefono que porto
+pero en ux tiene otro numero que totalplay le asigno en el contrato //
+se aplica reaprovisionamientoa portabilidad // factura el telefono que
+porto pero en tpro tiene otro numero que totalplay le asigno en el
+contrato // se aplica planchado </option>
+<option value="no tiene  los megas  de la promocion /  del aumento ">
+no tiene los megas de la promocion / del aumento </option>
+<option value="no tiene los megas que  contrato"> no tiene los megas
+que contrato </option>
+<option value="no tiene servicios   "> no tiene servicios </option>
+<option value="no tiene servicios   por enrutamiento"> no tiene
+servicios por enrutamiento </option>
+<option value="obteniendo direccion  ip"> obteniendo direccion ip </option>
+<option value="obteniendo dirección IP //   conecta directamente a la ONT // intercambia la stb // Continua la falla en la misma STB se envia vt ">
+obteniendo dirección IP // conecta directamente a la ONT // intercambia
+la stb // Continua la falla en la misma STB se envia vt </option>
+<option value="obteniendo dirección IP // tiene SW // es modelo no es PS-604 se envia vt falla en cable de red ">
+obteniendo dirección IP // tiene SW // es modelo no es PS-604 se envia
+vt falla en cable de red </option>
+<option value="ont cancelada / se activa desde  ux  "> ont cancelada /
+se activa desde ux </option>
+<option value="pantalla  negro en netflix del stb"> pantalla negro en
+netflix del stb </option>
+<option value="pantalla negra / sin graficos  / sin señal "> pantalla
+negra / sin graficos / sin señal </option>
+<option value="pantalla roja al reproducir contenido de Amazon // desconectar el cable hdmi del decodificador y volver a conectar // reiniciar el stb // N2 PANTALLA ROJA / se escala  ">
+pantalla roja al reproducir contenido de Amazon // desconectar el cable
+hdmi del decodificador y volver a conectar // reiniciar el stb // N2
+PANTALLA ROJA / se escala </option>
+<option value="pixeleo // se cambia el  hdmi  y reinicia el stb  // se cambia de entrada en tv // megas  aprovisionados correctamente //  reinicia la ont // ">
+pixeleo // se cambia el hdmi y reinicia el stb // se cambia de entrada
+en tv // megas aprovisionados correctamente // reinicia la ont // </option>
+<option value="pixeleo // tiene SW // El modelo del switch no  es PS-604 // se envia vt  ">
+pixeleo // tiene SW // El modelo del switch no es PS-604 // se envia vt
+</option>
+<option value="por favor de atender visita  tecnica el cliente esta en espera  de los tecnicos ">
+por favor de atender visita tecnica el cliente esta en espera de los
+tecnicos </option>
+<option value="potencias  fuera de  rango -28.00"> potencias fuera de
+rango -28.00 </option>
+<option value="pots correctos // se le pide cambiar el cable y el telefono">
+pots correctos // se le pide cambiar el cable y el telefono </option>
+<option value="presenta  pixeleo en  algunos canales"> presenta pixeleo
+en algunos canales </option>
+<option value="presenta  pixeleo en  todos los canales  "> presenta
+pixeleo en todos los canales </option>
+<option value="Presenta audio/Imagen desfasados"> Presenta audio/Imagen
+desfasados </option>
+<option value="presenta error 404 en anytime "> presenta error 404 en
+anytime </option>
+<option value="presenta error 404 en hbo // internet  funciona  bien // la falla es  en todos los stb/ / se reinicia el stb">
+presenta error 404 en hbo // internet funciona bien // la falla es en
+todos los stb/ / se reinicia el stb </option>
+<option value="presenta fallas en servicios , tiene  ONT hg8245  se envia vt para cambio de ont sin costo  ">
+presenta fallas en servicios , tiene ONT hg8245 se envia vt para cambio
+de ont sin costo </option>
+<option value="problema de conexion"> problema de conexion </option>
+<option value="problemas de juego en linea "> problemas de juego en
+linea </option>
+<option value="quiere  bloquear renta de  peliculas o apps"> quiere
+bloquear renta de peliculas o apps </option>
+<option value="quiere activar el wps// a petición del cliente se activa desde maqueta">
+quiere activar el wps// a petición del cliente se activa desde maqueta </option>
+<option value="quiere apertura de  puertos"> quiere apertura de puertos
+</option>
+<option value="quiere cambio de contraseña de wifi"> quiere cambio de
+contraseña de wifi </option>
+<option value="quiere cambio de contraseña de wifi // se cambia a peticion del cliente">
+quiere cambio de contraseña de wifi // se cambia a peticion del cliente
+</option>
+<option value="Quiere cambio de nip  // se  indica como hacerlo desde  el stb  ">
+Quiere cambio de nip // se indica como hacerlo desde el stb </option>
+<option value="quiere iniciar sesion en la app de totalgo"> quiere
+iniciar sesion en la app de totalgo </option>
+<option value="quiere la contraseña de wifi"> quiere la contraseña de
+wifi </option>
+<option value="quiere la portabilidad  de su dn anterior"> quiere la
+portabilidad de su dn anterior </option>
+<option value="quiere saber el estatus de la visita  técnica"> quiere
+saber el estatus de la visita técnica </option>
+<option value="reproduccion lenta en youtube"> reproduccion lenta en
+youtube </option>
+<option value="ruido en la linea"> ruido en la linea </option>
+<option value="ruido en la linea desde que  levanta la bocina"> ruido
+en la linea desde que levanta la bocina </option>
+<option value="safe mode // paquete  y perfiles  en iptv // tiene direccionamiento // vas profile correcto // NO Tiene  alarma de Remote optical // se cambia de puerto en la ont y se reinicia stb // Reinicia ONT">
+safe mode // paquete y perfiles en iptv // tiene direccionamiento //
+vas profile correcto // NO Tiene alarma de Remote optical // se cambia
+de puerto en la ont y se reinicia stb // Reinicia ONT </option>
+<option value="se  confirma con gestor que la STB se encuentre online.">
+se confirma con gestor que la STB se encuentre online. </option>
+<option value="se  indica como visualizarla desde la ont "> se indica
+como visualizarla desde la ont </option>
+<option value="se  indica que los canales no estan disponibles en la parrila contratada ">
+se indica que los canales no estan disponibles en la parrila contratada
+</option>
+<option value="se activa desde  dashboard"> se activa desde dashboard </option>
+<option value="se activa desde  ux"> se activa desde ux </option>
+<option value="se activa el dmz  para el equipo del cliente "> se
+activa el dmz para el equipo del cliente </option>
+<option value="se activa la red 5g del stb"> se activa la red 5g del
+stb </option>
+<option value="se activa monitoreo y se detecta que satura el ancho de banda  , la ont si descarga  los megas que contrato pero el equipo del cliente  no ">
+se activa monitoreo y se detecta que satura el ancho de banda , la ont
+si descarga los megas que contrato pero el equipo del cliente no </option>
+<option value="se actualiza el correo del cliente  "> se actualiza el
+correo del cliente </option>
+<option value="se actualiza la direccion del cliente  "> se actualiza
+la direccion del cliente </option>
+<option value="Se apaga el stb  "> Se apaga el stb </option>
+<option value="Se apaga y se enciende  con el control remoto el stb  ">
+Se apaga y se enciende con el control remoto el stb </option>
+<option value="se aplica Factory Reset"> se aplica Factory Reset </option>
+<option value="se aplica reaprovisionamiento de la ont"> se aplica
+reaprovisionamiento de la ont </option>
+<option value="se aplica reaprovisionamiento de la ont"> se aplica
+reaprovisionamiento de la ont </option>
+<option value="se aplica reinicio  logico"> se aplica reinicio logico </option>
+<option value="se aplica reset de fabrica"> se aplica reset de fabrica </option>
+<option value="se borra sn en datos de la cuenta  "> se borra sn en
+datos de la cuenta </option>
+<option value="se camban las pilas"> se camban las pilas </option>
+<option value="se cambia cable hdmi"> se cambia cable hdmi </option>
+<option value="se cambia de canal de frecuencia a uno libre  "> se
+cambia de canal de frecuencia a uno libre </option>
+<option value="se cambia de entrada en la tv  "> se cambia de entrada
+en la tv </option>
+<option value="se cambia la  contraseña"> se cambia la contraseña </option>
+<option value="se cambia la contraseña de wifi del stb  "> se cambia la
+contraseña de wifi del stb </option>
+<option value="se conecta  a mas de  8 metros en otro nivel // se recomienda  wifi extender //">
+se conecta a mas de 8 metros en otro nivel // se recomienda wifi
+extender // </option>
+<option value="se conecta  cerca de la ont //  no hay nada que obstruya la señal de wifi  // conecta pocos equipos // se cambia la contraseña de wifi y el nombre de la red  //">
+se conecta cerca de la ont // no hay nada que obstruya la señal de wifi
+// conecta pocos equipos // se cambia la contraseña de wifi y el nombre
+de la red // </option>
+<option value="se conecta correctamente el cable hdmi"> se conecta
+correctamente el cable hdmi </option>
+<option value="se conecta solo un equipo telefonico , se detecta falla en sus extensiones">
+se conecta solo un equipo telefonico , se detecta falla en sus
+extensiones </option>
+<option value="se congela la  imagen en todos los canales "> se congela
+la imagen en todos los canales </option>
+<option value="se corrobora que si tiene los megas que contrato // se le pide que se conecta a la red 5g así navega mejor  y tiene mas megas">
+se corrobora que si tiene los megas que contrato // se le pide que se
+conecta a la red 5g así navega mejor y tiene mas megas </option>
+<option value="se cortan las llamadas de salida  y de entrada"> se
+cortan las llamadas de salida y de entrada </option>
+<option value="se da el costo por minuto , se indican terminos y condiciones de servicio el tt acepta">
+se da el costo por minuto , se indican terminos y condiciones de
+servicio el tt acepta </option>
+<option value="se daba  informacion y se hacia  sondeo , el cliente  no responde   cierra  chat">
+se daba informacion y se hacia sondeo , el cliente no responde cierra
+chat </option>
+<option value="se daba informacion y sondeo al cliente, al validar corta la llamada, se pasan datos a supervisor ">
+se daba informacion y sondeo al cliente, al validar corta la llamada,
+se pasan datos a supervisor </option>
+<option value="se desconecta y conecta cable de red del stb // se cambia de puerto de la ont // sin éxito se envia vt  falla en cable de red">
+se desconecta y conecta cable de red del stb // se cambia de puerto de
+la ont // sin éxito se envia vt falla en cable de red </option>
+<option value="se detecta falla fisica en su conexion  // se le pide cambiar el cable y el  telefono">
+se detecta falla fisica en su conexion // se le pide cambiar el cable y
+el telefono </option>
+<option value="se detecta que  es el control remoto que no funciona  // se envia  control remoto por garantia esta dentro de los  tres meses">
+se detecta que es el control remoto que no funciona // se envia cr por
+garantia esta dentro de los tres meses </option>
+<option value="se detecta que  satura el ancho de banda  porque tiene muchos  equipos conectados ">
+se detecta que satura el ancho de banda porque tiene muchos equipos
+conectados </option>
+<option value="se detecta que es el equipo que satura  porque recibe mas megas otros equipos  conectados a la misma red">
+se detecta que es el equipo que satura porque recibe mas megas otros
+equipos conectados a la misma red </option>
+<option value="se detecta que es el equipo que satura  porque tiene muchos procesos  corriendo en segundo plano">
+se detecta que es el equipo que satura porque tiene muchos procesos
+corriendo en segundo plano </option>
+<option value="se detecta que la mac esta en lista negra // se elimina  la mac">
+se detecta que la mac esta en lista negra // se elimina la mac </option>
+<option value="se detectan multiples alarmas en  historicos de tpro // se envia vt por intermitencias">
+se detectan multiples alarmas en historicos de tpro // se envia vt por
+intermitencias </option>
+<option value="se enciende la ont con el boton  de on / off"> se
+enciende la ont con el boton de on / off </option>
+<option value="se envia contraseña temporal al correo del cliente "> se
+envia contraseña temporal al correo del cliente </option>
+<option value="se envía por correo la contraseña temporal"> se envía
+por correo la contraseña temporal </option>
+<option value="se envia vt  para cambio de stb sin costo  //"> se envia
+vt para cambio de stb sin costo // </option>
+<option value="se envia vt falla en  puerto del stb"> se envia vt falla
+en puerto del stb </option>
+<option value="se envia vt para cambio de ont  // tiene ont hg8247 que ya no se da soporte">
+se envia vt para cambio de ont // tiene ont hg8247 que ya no se da
+soporte </option>
+<option value="se envia vt por daño en el puerto  de telefono"> se
+envia vt por daño en el puerto de telefono </option>
+<option value="se envia vt por daño en el puerto de stb "> se envia vt
+por daño en el puerto de stb </option>
+<option value="se explica el porque de la perdida de megas "> se
+explica el porque de la perdida de megas </option>
+<option value="se hace la venta de  un wifi extender de  50 pesos al mes, sin costo de instalacion, se da info de prorrateo , el titular acepta ">
+se hace la venta de un wifi extender de 50 pesos al mes, sin costo de
+instalacion, se da info de prorrateo , el titular acepta </option>
+<option value="se la renta de una tv adicional con costo de  100 pesos  la instalacion  y 129 pesos  la mensualidad  , se da informacion de prorrateo el titular acepta">
+se la renta de una tv adicional con costo de 100 pesos la instalacion y
+129 pesos la mensualidad , se da informacion de prorrateo el titular
+acepta </option>
+<option value="se hace ping en ux si resuelve"> se hace ping en ux si
+resuelve </option>
+<option value="se indica como activar la compra con autorizacion  "> se
+indica como activar la compra con autorizacion </option>
+<option value="se indica como iniciar sesion en la app"> se indica como
+iniciar sesion en la app </option>
+<option value="se indica la contraseña la puede copiar desde la etiqueta de la ont ">
+se indica la contraseña la puede copiar desde la etiqueta de la ont </option>
+<option value="se indica que la  portabilidad se realizo  correctamente">
+se indica que la portabilidad se realizo correctamente </option>
+<option value="quiere ver Disney en en stb, se indica que la app de Disney plus  no esta disponible por el momento en el stb para ver el contenido ">
+quiere ver Disney en en stb, se indica que la app de Disney plus no
+esta disponible por el momento en el stb para ver el contenido </option>
+<option value="Se indica que no  hay conexion  remota , la ip que tiene es restriguida ,  necesita una ip fija o dinamica  misma que no hay disponibilidad , se le pide tiempo de espera indefinido">
+Se indica que no hay conexion remota , la ip que tiene es restriguida ,
+necesita una ip fija o dinamica misma que no hay disponibilidad , se le
+pide tiempo de espera indefinido </option>
+<option value="se indica que no podemos bloquear numero de  llamadas de entrada ">
+se indica que no podemos bloquear numero de llamadas de entrada </option>
+<option value="se intercambian los controles  con  los otros stb // se detecta que es el control remoto que no funciona  // se recomienda usar la app // se hace la venta del control remoto // se da el costo de 159 cargo a su estado de cuenta //  se indica requisitos para la entrega  // se  proporcina fecha y horario  //  el titular acepta el cargo ">
+se intercambian los controles con los otros stb // se detecta que es el
+control remoto que no funciona // se recomienda usar la app // se hace
+la venta del control remoto // se da el costo de 159 cargo a su estado
+de cuenta // se indica requisitos para la entrega // se proporcina
+fecha y horario // el titular acepta el cargo </option>
+<option value="se le  pide registrarse   desde  mitotalplay.com.mx para activar servicio de prime video amazon">
+se le pide registrarse desde mitotalplay.com.mx para activar servicio
+de prime video amazon </option>
+<option value="se le indica iniciar sesion en el portal de amazon para agregar dispositivo // en dispositivos asociados  //">
+se le indica iniciar sesion en el portal de amazon para agregar
+dispositivo // en dispositivos asociados // </option>
+<option value="se le indica registrar desde la platarforma mitotalplay.com.mx para activar servicio de prime video amazon">
+se le indica registrar desde la platarforma mitotalplay.com.mx para
+activar servicio de prime video amazon </option>
+<option value="se le pide cambiar el cable hdmi"> se le pide cambiar el
+cable hdmi </option>
+<option value="se le pide cambiar el cable y el telefono"> se le pide
+cambiar el cable y el telefono </option>
+<option value="se le pide ingresar al portal de  mi totalplay.com.mx o a la app para realizar el tramite  portabilidad  ">
+se le pide ingresar al portal de mi totalplay.com.mx o a la app para
+realizar el tramite portabilidad </option>
+<option value="se le pide ingresar al portal de  mi totalplay.com.mx o en la app para cambio de contraseña ">
+se le pide ingresar al portal de mi totalplay.com.mx o en la app para
+cambio de contraseña </option>
+<option value="se le pide ingresar al portal de  mi totalplay.com.mx para reactivar   membresia">
+se le pide ingresar al portal de mi totalplay.com.mx para reactivar
+membresia </option>
+<option value="se le pide que valide el equipo  , internet si tiene, con los demas equipos si navega">
+se le pide que valide el equipo , internet si tiene, con los demas
+equipos si navega </option>
+<option value="se le pide que valide su equipo , se descarta que sea falla de totalplay  porque en otros equipos  si funciona la red ">
+se le pide que valide su equipo , se descarta que sea falla de
+totalplay porque en otros equipos si funciona la red </option>
+<option value="se le pide tiempo de espera  la visita  esta agendada  en tiempo  ">
+se le pide tiempo de espera la vt esta agendada en tiempo </option>
+<option value="se le pide usar la red 5g de la ont  "> se le pide usar
+la red 5g de la ont </option>
+<option value="Se pide seleccionar la opción de Mas información y luego seleccionar restablecer Netflix.">
+Se pide seleccionar la opción de Mas información y luego seleccionar
+restablecer Netflix. </option>
+<option value="se queda  cargando la aplicación  de youtube  netflix  ">
+se queda cargando la aplicación de youtube netflix </option>
+<option value="se reagenda la visita tecnica a la fecha  mas  proxima  ">
+se reagenda la visita tecnica a la fecha mas proxima </option>
+<option value="se reinicia  ont en automatico , los leds se apagan y despues se encienden  de nuevo ">
+se reinicia ont en automatico , los leds se apagan y despues se
+encienden de nuevo </option>
+<option value="se reinicia ont automaticamente "> se reinicia ont
+automaticamente </option>
+<option value="se revisan  conexiones y boton de encendido // se cambia  de contacto de pared ,  no enciende se envia vt">
+se revisan conexiones y boton de encendido // se cambia de contacto de
+pared , no enciende se envia vt </option>
+<option value="se revisan conexiones , se cambia de contacto de pared  ">
+se revisan conexiones , se cambia de contacto de pared </option>
+<option value="se revisan conexiones //   se desconecta y conecta cable de red del stb  y ont   sin éxito  se envia vt  amarre incorrecto  ">
+se revisan conexiones // se desconecta y conecta cable de red del stb y
+ont sin éxito se envia vt amarre incorrecto </option>
+<option value="falla en cable de red //   se intercambia el stb con otro   se replica la falla en la misma tv  //  se detecta falla  en el cable  //se envia vt ">
+se revisan conexiones // se intercambia el stb con otro se replica la
+falla en la misma tv // se detecta falla en el cable //se envia vt </option>
+<option value="falla en puerto de stb //   se intercambia el stb con otro   se replica la falla en el mismo stb //  se detecta falla en el  puerto del  stb //se envia vt ">
+se revisan conexiones // se intercambia el stb con otro se replica la
+falla en el mismo stb // se detecta falla en el puerto del stb //se
+envia vt </option>
+<option value="se revisan conexiones // se cambia de puerto en la ont // se desconecta y conecta cable de red del stb  sin éxito  se envia vt  // stb no se visualiza en  tpro">
+se revisan conexiones // se cambia de puerto en la ont // se desconecta
+y conecta cable de red del stb sin éxito se envia vt // stb no se
+visualiza en tpro </option>
+<option value="se sintoniza en la entrada correcta"> se sintoniza en la
+entrada correcta </option>
+<option value="se transfiere a ATE quiere  cancelar // no quiere soporte// no quiere sesion de derechos  // se pasan datos de seguridad">
+se transfiere a ATE quiere cancelar // no quiere soporte// no quiere
+sesion de derechos // se pasan datos de seguridad </option>
+<option value="Se transfiere a SAC // cambio de DN"> Se transfiere a
+SAC // cambio de DN </option>
+<option value="Se transfiere a SAC // el pago no esta reflejado"> Se
+transfiere a SAC // el pago no esta reflejado </option>
+<option value="Se transfiere a SAC // por contratacion de adicionales">
+Se transfiere a SAC // por contratacion de adicionales </option>
+<option value="Se transfiere a SAC // quiere  cancelar adicionales"> Se
+transfiere a SAC // quiere cancelar adicionales </option>
+<option value="Se transfiere a SAC // quiere cambio de plan"> Se
+transfiere a SAC // quiere cambio de plan </option>
+<option value="Se transfiere a SAC // quiere reubicacion de servicios">
+Se transfiere a SAC // quiere reubicacion de servicios </option>
+<option value="Se transfiere a SAC // seguimiento a portabilidad"> Se
+transfiere a SAC // seguimiento a portabilidad </option>
+<option value="se transfiere a SAC no han ido a instalar el servicio ">
+se transfiere a SAC no han ido a instalar el servicio </option>
+<option value="se transfiere a SAC por tema  de aclaraciones //"> se
+transfiere a SAC por tema de aclaraciones // </option>
+<option value="se valida  saturación en el ancho de banda  de banda  del cliente se le sugiere  incrementar a mas megas">
+se valida saturación en el ancho de banda de banda del cliente se le
+sugiere incrementar a mas megas </option>
+<option value="se valida que es una cuenta de match"> se valida que es
+una cuenta de match </option>
+<option value="se valida que la tiene  45 mb para 5 stb  se aplica  reaprovisionamiento para cargar megas  correctos al servicio de tv">
+se valida que la tiene 45 mb para 5 stb se aplica reaprovisionamiento
+para cargar megas correctos al servicio de tv </option>
+<option value="se valida que ya tiene folio de visita  tecnica por fallas   para hoy , se le pide tiempo de espera  , la visita esta dentro de  tiempo ">
+se valida que ya tiene folio de visita tecnica por fallas para hoy , se
+le pide tiempo de espera , la visita esta dentro de tiempo </option>
+<option value="se valida que ya tiene folio de visita tecnica por fallas para mañana  se reagenda para hoy por atencion al cliente  , se le pide tiempo de espera , la visita esta dentro de tiempo  ">
+se valida que ya tiene folio de visita tecnica por fallas para mañana
+se reagenda para hoy por atencion al cliente , se le pide tiempo de
+espera , la visita esta dentro de tiempo </option>
+<option value="servicio no disponible // paquete  y perfiles  en iptv // presiona ok sin éxito // reinicia stb // des-conecta cable de red  //  ">
+servicio no disponible // paquete y perfiles en iptv // presiona ok sin
+éxito // reinicia stb // des-conecta cable de red // </option>
+<option value="si puede ver ver  youtube en otros dispositivos correctamente">
+si puede ver ver youtube en otros dispositivos correctamente </option>
+<option value="si tiene  graficos  de menu, volumen , puede  reproducir youtube , si tiene audio  // reinicia el stb de la luz la falla es  igual //">
+si tiene graficos de menu, volumen , puede reproducir youtube , si
+tiene audio // reinicia el stb de la luz la falla es igual // </option>
+<option value="si tiene acceso a netflix en otros dispositivos"> si
+tiene acceso a netflix en otros dispositivos </option>
+<option value="si tiene graficos de menu, volumen , puede reproducir youtube , si tiene audio // reinicia el stb  //    ------- ">
+si tiene graficos de menu, volumen , puede reproducir youtube , si
+tiene audio // reinicia el stb // ------- </option>
+<option value="sin acceso a la app  de totalgo y portal  "> sin acceso
+a la app de totalgo y portal </option>
+<option value="sin acceso a la app de amazon"> sin acceso a la app de
+amazon </option>
+<option value="sin acceso a la app de netflix"> sin acceso a la app de
+netflix </option>
+<option value="sin acceso a la app de netflix del stb  // se sale al canal principal de totalplay ">
+sin acceso a la app de netflix del stb // se sale al canal principal de
+totalplay </option>
+<option value="sin audio en algunos canales // no se replica en maqueta // se reinicia el stb //  Anytime tv en los  canales donde no tiene audio no tiene audio // se pide cambiar  cable HDMI ">
+sin audio en algunos canales // no se replica en maqueta // se reinicia
+el stb // Anytime tv en los canales donde no tiene audio no tiene audio
+// se pide cambiar cable HDMI </option>
+<option value="sin audio en algunos canales // no se replica en maqueta // se reinicia el stb //  Anytime tv en los  canales donde no tiene audio si tiene audio se escala  ">
+sin audio en algunos canales // no se replica en maqueta // se reinicia
+el stb // Anytime tv en los canales donde no tiene audio si tiene audio
+se escala </option>
+<option value="sin audio en todos los  canales"> sin audio en todos los
+canales </option>
+<option value="sin audio en todos los canales // se pide  reproducir programas de Anytime o Youtube // no   tiene audio // se pide cambiar el cable HDMI // se pide reiniciar stb //  no tiene bocinas externas // intercambia stbs si no vt  ">
+sin audio en todos los canales // se pide reproducir programas de
+Anytime o Youtube // no tiene audio // se pide cambiar el cable HDMI //
+se pide reiniciar stb // no tiene bocinas externas // intercambia stbs
+si no vt </option>
+<option value="sin audio en todos los canales // se pide  reproducir programas de Anytime o Youtube // si tiene audio se escala ">
+sin audio en todos los canales // se pide reproducir programas de
+Anytime o Youtube // si tiene audio se escala </option>
+<option value="sin audio o audio distorsionado en amazon // no soporta Dolby 5.1 // la opcion no se encuentra menu-sonido">
+sin audio o audio distorsionado en amazon // no soporta Dolby 5.1 // la
+opcion no se encuentra menu-sonido </option>
+<option value="sin banner de  netflix  "> sin banner de netflix </option>
+<option value="sin conexion a Internet por contraseña incorrecta"> sin
+conexion a Internet por contraseña incorrecta </option>
+<option value="Sin conexion remota "> Sin conexion remota </option>
+<option value="sin direccionamiento / se aplica reaprovisionamiento ">
+sin direccionamiento / se aplica reaprovisionamiento </option>
+<option value="Sin graficos de menu / volumen / sin acceso a apps ">
+Sin graficos de menu / volumen / sin acceso a apps </option>
+<option value="sin linea de telefono / se valida que es linea ociosa / se activa desde dashboard ">
+sin linea de telefono / se valida que es linea ociosa / se activa desde
+dashboard </option>
+<option value="sin llamadas de entrada"> sin llamadas de entrada </option>
+<option value="sin llamadas de salida   "> sin llamadas de salida </option>
+<option value="sin llamadas de salida  y entrada"> sin llamadas de
+salida y entrada </option>
+<option value="sin llamadas de salida / grabacion de adeudo"> sin
+llamadas de salida / grabacion de adeudo </option>
+<option value="Sin señal // El input sintonizado correctamente  //  se cambia el cable hdmi – se cambia  de entrada en la tv   y se reinicia el stb // M362: se agenda  VT">
+Sin señal // El input sintonizado correctamente // se cambia el cable
+hdmi – se cambia de entrada en la tv y se reinicia el stb // M362: se
+agenda VT </option>
+<option value="sin servicio  de tv por adeduo"> sin servicio de tv por
+adeduo </option>
+<option value="Sin servicios por adeudo  , el pago aun no esta reflejado . Se manda a sac  para validar el pago">
+Sin servicios por adeudo , el pago aun no esta reflejado . Se manda a
+sac para validar el pago </option>
+<option value="Sin servicios por adeudo , la cuenta esta al corriente se desenruta desde ux ">
+Sin servicios por adeudo , la cuenta esta al corriente se desenruta
+desde ux </option>
+<option value="sin tiene  graficos  de menu, volumen , no puede  reproducir youtube    ">
+sin tiene graficos de menu, volumen , no puede reproducir youtube </option>
+<option value="solicita alta de HBO. Se confirma costo $169, plazo sugerido 3 meses y costo de conexión de $99. Se informa de prorrateo en estado de cuenta // el titular acepta">
+solicita alta de HBO. Se confirma costo $169, plazo sugerido 3 meses y
+costo de conexión de $99. Se informa de prorrateo en estado de cuenta
+// el titular acepta </option>
+<option value="solo enciende el de power // sin alarmas // se revisan conexiones //   reinicia ont //  sin exito se envia vt ont no tiene  potencia">
+solo enciende el de power // sin alarmas // se revisan conexiones // se
+cambia de contacto de pared // se des/conecta cable de luz sin exito se
+envia vt ONT no enciende </option>
+<option value="solo se conecta  a la red 2.4 g /  se le  recomienda usar la red 5g para navegar al máximo de velocidad ">
+solo se conecta a la red 2.4 g / se le recomienda usar la red 5g para
+navegar al máximo de velocidad </option>
+<option value="solo tiene la falla en un stb"> solo tiene la falla en
+un stb </option>
+<option value="stb parpadea en entre rojo y verde sin mensaje en la pantalla  , se valida con sup ts de stb no enciende  ">
+stb parpadea en entre rojo y verde sin mensaje en la pantalla , se
+valida con sup ts de stb no enciende </option>
+<option value="sw modelo swicth hr901  led color verdes // se recomienda amarre 1000fd">
+sw modelo swicth hr901 led color verdes // se recomienda amarre 1000fd </option>
+<option value="tiene  fallas en la conexion  vpn  "> tiene fallas en la
+conexion vpn </option>
+<option value="tiene folio de visita tecnica sin agendar , se agenda a la fecha  mas  proxima  , se pide tiempo de espera ">
+tiene folio de visita tecnica sin agendar , se agenda a la fecha mas
+proxima , se pide tiempo de espera </option>
+<option value="tiene  PON parpadeando  // se aplica reaprovisionamiento  ">
+tiene PON parpadeando // se aplica reaprovisionamiento </option>
+<option value="tiene  PON parpadeando / no es posible planchar la ont // tiene alarmas de warning por CFO // se envia vt">
+tiene PON parpadeando / no es posible planchar la ont // tiene alarmas
+de warning por CFO // se envia vt </option>
+<option value="tiene activo desvio de llamadas // se indica  como desactivar el servicio digital">
+tiene activo desvio de llamadas // se indica como desactivar el
+servicio digital </option>
+<option value="tiene indicador en gris"> tiene indicador en gris </option>
+<option value="Tiene LOS en rojo //  se envia  visita tecnica por CFO">
+Tiene LOS en rojo // se envia visita tecnica por CFO </option>
+<option value="Tiene LOS en rojo // se reinicia la ont // se revisan conexiones  // cable de fibra optica en buen estado // se envia  vt por CFO">
+Tiene LOS en rojo // se reinicia la ont // se revisan conexiones //
+cable de fibra optica en buen estado // se envia vt por CFO </option>
+<option value="Tiene mensaje  disculpe las molestias en un momento se restablecera la señal">
+Tiene mensaje disculpe las molestias en un momento se restablecera la
+señal </option>
+<option value="tiene mensaje en tv buscando servidor  NTP"> tiene
+mensaje en tv buscando servidor NTP </option>
+<option value="tipo de nat  doble nat"> tipo de nat doble nat </option>
+<option value="Todos los canales estan  en negro"> Todos los canales
+estan en negro </option>
+<option value="Va a validar con  los demas dispositivos  en casa , no sabe si son compatibles  a la red 5g ">
+Va a validar con los demas dispositivos en casa , no sabe si son
+compatibles a la red 5g </option>
+<option value="wlan apagado // se enciende wifi"> wlan apagado // se
+enciende wifi </option>
+<option value="no le aparece la red  wifi  despues de que cambio  la contraseña">
+no le aparece la red wifi despues de que cambio la contraseña </option>
+<option value="se aplica ajuste de megas desde ux"> se aplica ajuste de
+megas desde ux </option>
+<option value="no le aparece la red  wifi  despues de que cambio  la contraseña">
+no le aparece la red wifi despues de que cambio la contraseña </option>
+<option value="se aplica ajuste de megas desde ux "> se aplica ajuste
+de megas desde ux </option>
+<option value="se detecta que es la pc que tiene un amarre de 100fd , se recomienda  1000fd para altas  velocidades">
+se detecta que es la pc que tiene un amarre de 100fd , se recomienda
+1000fd para altas velocidades </option>
+<option value="quiere cambio de  equipo por antiguedad y  por fallas en el servicio   // tiene  mas de dos años con el equipo  , por antieguedad y  atencion al cliente se realiza  cambio de  equipo sin costo ">
+quiere cambio de equipo por antiguedad y por fallas en el servicio //
+tiene mas de dos años con el equipo , por antieguedad y atencion al
+cliente se realiza cambio de equipo sin costo </option>
+<option value="asegura que ya hicieron las pruebas anteriormente , pero no hay llamadas ,  se le indica la importancia de hacer pruebas  pero  no quiere , amenaza  con cancelar si no se le manda a  un tecnico  , por atencion se envia vt sin costo ">
+asegura que ya hicieron las pruebas anteriormente , pero no hay
+llamadas , se le indica la importancia de hacer pruebas pero no quiere
+, amenaza con cancelar si no se le manda a un tecnico , por atencion se
+envia vt sin costo </option>
+<option value="quiere reubicacion de servicios en el mismo  de domicilio ">
+quiere reubicacion de servicios en el mismo de domicilio </option>
+<option value="en tel 1 y tel 2 no da tono/ ya cambio el cable y el telefono /se detecta falla en el puerto de la ont // se envia vt por daño en el puerto  de telefono">
+en tel 1 y tel 2 no da tono/ ya cambio el cable y el telefono /se
+detecta falla en el puerto de la ont // se envia vt por daño en el
+puerto de telefono </option>
+<option value="no navega con la red de wifi extender /  se indica como configurarlo a modo de repetidor ">
+no navega con la red de wifi extender / se indica como configurarlo a
+modo de repetidor </option>
+<option value="quiere dar de baja un stb  ya no lo usa  "> quiere dar
+de baja un stb ya no lo usa </option>
+<option value="se envia vt para cambio de stb   // tiene stb netgem que ya no se da soporte">
+se envia vt para cambio de stb // tiene stb netgem que ya no se da
+soporte </option>
+<option value="por atencion se envia visita tecnica  sin costo , se valida con supervisor">
+por atencion se envia visita tecnica sin costo , se valida con
+supervisor </option>
+<option value="quiere desvio de llamadas// se indica como activar el servicio digital *72#  o desde app">
+quiere desvio de llamadas// se indica como activar el servicio digital
+*72# o desde app </option>
+<option value="tiene 245H Intermitencias en wifi tiene doble play se hace cambio de on para v5 / por atencion se envia visita tecnica  sin costo , se valida con supervisor">
+tiene 245H Intermitencias en wifi tiene doble play se hace cambio de on
+para v5 / por atencion se envia visita tecnica sin costo , se valida
+con supervisor </option>
+<option value="tiene mensaje en netflix : tenemos  problemas  para reproducir este tiutlo o elije  otro titulo ">
+tiene mensaje en netflix : tenemos problemas para reproducir este
+tiutlo o elije otro titulo </option>
+<option value="codigo  -10 dispositivo  previamente registrado ">
+codigo -10 dispositivo previamente registrado </option>
+<option value="quiere dar de alta hbo / se indica como activar desde hbo  max con datos de  totalplay">
+quiere dar de alta hbo / se indica como activar desde hbo max con datos
+de totalplay </option>
+<option value="cuando levanta la bocina de telefono  arroja mensaje de adeudo en el servicio">
+cuando levanta la bocina de telefono arroja mensaje de adeudo en el
+servicio </option>
+<option value="quiere  bloquear renta de  peliculas o apps  /  se indica como activar la compra con autorizacion">
+quiere bloquear renta de peliculas o apps / se indica como activar la
+compra con autorizacion </option>
+<option value="no es posible configurar la ont la interfaz  no carga correctamente en maqueta se envia vt  por  intermitencias">
+no es posible configurar la ont la interfaz no carga correctamente en
+maqueta se envia vt por intermitencias </option>
+<option value="sin acceso a la app de netflix / tiene mensaje de no pudimos procesar tu pago ">
+sin acceso a la app de netflix / tiene mensaje de no pudimos procesar
+tu pago </option>
+<option value="en codigo  1 .  se valida que en las apps  estan bien  , se valida con sup Armando de realizar  ts de  error 500 e 500">
+en codigo 1 . se valida que en las apps estan bien , se valida con sup
+Armando de realizar ts de error 500 e 500 </option>
+</select>
+<br>
+<br>
+<small><a href="#Corte_de_fibra">CFO</a> &nbsp; <a href="#potencias_fuera_de_rango">Potencias fuera de rango</a>
+&nbsp;&nbsp;&nbsp; <a href="#Intermitencias_wifi">Intermitencias en
+wifi</a> &nbsp; &nbsp; <a href="#Sin_linea_de_telefono">sin linea de
+telefono</a> &nbsp;&nbsp;&nbsp; </small><span style="font-family: Arial;"></span><small><a href="#si_senal_de_tv">Sin
+Señal de tv</a> &nbsp; </small><a href="#Amarre_incorrecto"><small>Amarre
+incorrecto</small></a><small>&nbsp;&nbsp; <a href="#Pantalla_negra__todos_los_canales_">Pantalla negra&nbsp; (
+todos los canales)</a>&nbsp;</small>&nbsp;<small><span style="font-family: Arial;">&nbsp;<a href="#Falla_general"> Fallas
+generales</a>&nbsp; <br>
+<br>
+</span></small>
+<table style="text-align: left; height: 250px; width: 1468px;" border="1" cellpadding="2" cellspacing="2">
+  <tbody>
+    <tr style="width: 1498px;">
+      <td style="vertical-align: top; width: 400px; height: 295px;"><textarea id="comment" name="comment" cols="48" rows="21" maxlength="65525" required="required">/Quien llama:
+/Reporta:
+/ts realizado:
+/
+/
+/
+/MAC:
+/Potencia:
+/Amarres:
+/Version:
+/Middelware:
+/Telefono:
+/
+/
+se soluciona:
+/
+/
+/
+/
+/
+/
+/Quien llama:
+/Reporta:
+/ts realizado:
+/
+/
+/
+/MAC:
+/Potencia:
+/Amarres:
+/Version:
+/Middelware:
+/Telefono:
+/
+/
+se soluciona:
+/
+/
+/
+/
+/
+/
+/Quien llama:
+/Reporta:
+/ts realizado:
+/
+/
+/
+/MAC:
+/Potencia:
+/Amarres:
+/Version:
+/Middelware:
+/Telefono:
+/
+/
+se soluciona:
+/
+/
+/
+/
+/
+/
+/Quien llama:
+/Reporta:
+/ts realizado:
+/
+/
+/
+/MAC:
+/Potencia:
+/Amarres:
+/Version:
+/Middelware:
+/Telefono:
+/
+/
+se soluciona:
+/
+/
+/
+/
+/
+/
+/Quien llama:
+/Reporta:
+/ts realizado:
+/
+/
+/
+/MAC:
+/Potencia:
+/Amarres:
+/Version:
+/Middelware:
+/Telefono:
+/
+/
+se soluciona:
+/
+/
+/
+/
+/
+/
+/Quien llama:
+/Reporta:
+/ts realizado:
+/
+/
+/
+/MAC:
+/Potencia:
+/Amarres:
+/Version:
+/Middelware:
+/Telefono:
+/
+/
+se soluciona:
+/
+/
+/
+/
+/
+/
+/Quien llama:
+/Reporta:
+/ts realizado:
+/
+/
+/
+/MAC:
+/Potencia:
+/Amarres:
+/Version:
+/Middelware:
+/Telefono:
+/
+/
+se soluciona:
+/
+/
+/
+/
+/
+/
+/Quien llama:
+/Reporta:
+/ts realizado:
+/
+/
+/
+/MAC:
+/Potencia:
+/Amarres:
+/Version:
+/Middelware:
+/Telefono:
+/
+/
+se soluciona:
+/
+/
+/
+/
+/
+/
+/Quien llama:
+/Reporta:
+/ts realizado:
+/
+/
+/
+/MAC:
+/Potencia:
+/Amarres:
+/Version:
+/Middelware:
+/Telefono:
+/
+/
+se soluciona:
+/
+/
+/
+/
+/
+/
+/Quien llama:
+/Reporta:
+/ts realizado:
+/
+/
+/
+/MAC:
+/Potencia:
+/Amarres:
+/Version:
+/Middelware:
+/Telefono:
+/
+/
+se soluciona:
+/
+/
+/
+/
+/
+/
+/Quien llama:
+/Reporta:
+/ts realizado:
+/
+/
+/
+/MAC:
+/Potencia:
+/Amarres:
+/Version:
+/Middelware:
+/Telefono:
+/
+/
+se soluciona:
+/
+/
+/
+/
+/
+/
+/Quien llama:
+/Reporta:
+/ts realizado:
+/
+/
+/
+/MAC:
+/Potencia:
+/Amarres:
+/Version:
+/Middelware:
+/Telefono:
+/
+/
+se soluciona:
+/
+/
+/
+/
+/
+/
+/Quien llama:
+/Reporta:
+/ts realizado:
+/
+/
+/
+/MAC:
+/Potencia:
+/Amarres:
+/Version:
+/Middelware:
+/Telefono:
+/
+/
+se soluciona:
+/
+/
+/
+/
+/
+/
+/Quien llama:
+/Reporta:
+/ts realizado:
+/
+/
+/
+/MAC:
+/Potencia:
+/Amarres:
+/Version:
+/Middelware:
+/Telefono:
+/
+/
+se soluciona:
+/
+/
+/
+/
+/
+/
+/Quien llama:
+/Reporta:
+/ts realizado:
+/
+/
+/
+/MAC:
+/Potencia:
+/Amarres:
+/Version:
+/Middelware:
+/Telefono:
+/
+/
+se soluciona:
+/
+/
+/
+/
+/
+/
+/Quien llama:
+/Reporta:
+/ts realizado:
+/
+/
+/
+/MAC:
+/Potencia:
+/Amarres:
+/Version:
+/Middelware:
+/Telefono:
+/
+/
+se soluciona:
+/
+/
+/
+/
+/
+/
+/Quien llama:
+/Reporta:
+/ts realizado:
+/
+/
+/
+/MAC:
+/Potencia:
+/Amarres:
+/Version:
+/Middelware:
+/Telefono:
+/
+/
+se soluciona:
+/
+/
+/
+/
+/
+/
+/Quien llama:
+/Reporta:
+/ts realizado:
+/
+/
+/
+/MAC:
+/Potencia:
+/Amarres:
+/Version:
+/Middelware:
+/Telefono:
+/
+/
+se soluciona:
+/
+/
+/
+/
+/
+/
+/Quien llama:
+/Reporta:
+/ts realizado:
+/
+/
+/
+/MAC:
+/Potencia:
+/Amarres:
+/Version:
+/Middelware:
+/Telefono:
+/
+/
+se soluciona:
+/
+/
+/
+/
+/
+/
+/Quien llama:
+/Reporta:
+/ts realizado:
+/
+/
+/
+/MAC:
+/Potencia:
+/Amarres:
+/Version:
+/Middelware:
+/Telefono:
+/
+/
+se soluciona:
+/
+/
+/
+/
+/
+/
+/Quien llama:
+/Reporta:
+/ts realizado:
+/
+/
+/
+/MAC:
+/Potencia:
+/Amarres:
+/Version:
+/Middelware:
+/Telefono:
+/
+/
+se soluciona:
+/
+/
+/
+/
+/
+/
+/Quien llama:
+/Reporta:
+/ts realizado:
+/
+/
+/
+/MAC:
+/Potencia:
+/Amarres:
+/Version:
+/Middelware:
+/Telefono:
+/
+/
+se soluciona:
+/
+/
+/
+/
+/
+/
+/Quien llama:
+/Reporta:
+/ts realizado:
+/
+/
+/
+/MAC:
+/Potencia:
+/Amarres:
+/Version:
+/Middelware:
+/Telefono:
+/
+/
+se soluciona:
+/
+/
+/
+/
+/
+/
+/Quien llama:
+/Reporta:
+/ts realizado:
+/
+/
+/
+/MAC:
+/Potencia:
+/Amarres:
+/Version:
+/Middelware:
+/Telefono:
+/
+/
+se soluciona:
+/
+/
+/
+/
+/
+/
+/Quien llama:
+/Reporta:
+/ts realizado:
+/
+/
+/
+/MAC:
+/Potencia:
+/Amarres:
+/Version:
+/Middelware:
+/Telefono:
+/
+/
+se soluciona:
+/
+/
+/
+/
+/
+/
+/Quien llama:
+/Reporta:
+/ts realizado:
+/
+/
+/
+/MAC:
+/Potencia:
+/Amarres:
+/Version:
+/Middelware:
+/Telefono:
+/
+/
+se soluciona:
+/
+/
+/
+/
+/
+/
+/Quien llama:
+/Reporta:
+/ts realizado:
+/
+/
+/
+/MAC:
+/Potencia:
+/Amarres:
+/Version:
+/Middelware:
+/Telefono:
+/
+/
+se soluciona:
+/
+/
+/
+/
+/
+/
+/Quien llama:
+/Reporta:
+/ts realizado:
+/
+/
+/
+/MAC:
+/Potencia:
+/Amarres:
+/Version:
+/Middelware:
+/Telefono:
+/
+/
+se soluciona:
+/
+/
+/
+/
+/
+/
+/Quien llama:
+/Reporta:
+/ts realizado:
+/
+/
+/
+/MAC:
+/Potencia:
+/Amarres:
+/Version:
+/Middelware:
+/Telefono:
+/
+/
+se soluciona:
+/
+/
+/
+/
+/
+/
+/Quien llama:
+/Reporta:
+/ts realizado:
+/
+/
+/
+/MAC:
+/Potencia:
+/Amarres:
+/Version:
+/Middelware:
+/Telefono:
+/
+/
+se soluciona:
+/
+/
+/
+/
+/
+/
+/Quien llama:
+/Reporta:
+/ts realizado:
+/
+/
+/
+/MAC:
+/Potencia:
+/Amarres:
+/Version:
+/Middelware:
+/Telefono:
+/
+/
+se soluciona:
+/
+/
+/
+/
+/
+/
+/Quien llama:
+/Reporta:
+/ts realizado:
+/
+/
+/
+/MAC:
+/Potencia:
+/Amarres:
+/Version:
+/Middelware:
+/Telefono:
+/
+/
+se soluciona:
+/
+/
+/
+/
+/
+/
+/Quien llama:
+/Reporta:
+/ts realizado:
+/
+/
+/
+/MAC:
+/Potencia:
+/Amarres:
+/Version:
+/Middelware:
+/Telefono:
+/
+/
+se soluciona:
+/
+/
+/
+/
+/
+/
+/Quien llama:
+/Reporta:
+/ts realizado:
+/
+/
+/
+/MAC:
+/Potencia:
+/Amarres:
+/Version:
+/Middelware:
+/Telefono:
+/
+/
+se soluciona:
+/
+/
+/
+/
+/
+/
+/Quien llama:
+/Reporta:
+/ts realizado:
+/
+/
+/
+/MAC:
+/Potencia:
+/Amarres:
+/Version:
+/Middelware:
+/Telefono:
+/
+/
+se soluciona:
+/
+/
+/
+/
+/
+/
+/Quien llama:
+/Reporta:
+/ts realizado:
+/
+/
+/
+/MAC:
+/Potencia:
+/Amarres:
+/Version:
+/Middelware:
+/Telefono:
+/
+/
+se soluciona:
+/
+/
+/
+/
+/
+/
+/Quien llama:
+/Reporta:
+/ts realizado:
+/
+/
+/
+/MAC:
+/Potencia:
+/Amarres:
+/Version:
+/Middelware:
+/Telefono:
+/
+/
+se soluciona:
+/
+/
+/
+/
+/
+/
+/Quien llama:
+/Reporta:
+/ts realizado:
+/
+/
+/
+/MAC:
+/Potencia:
+/Amarres:
+/Version:
+/Middelware:
+/Telefono:
+/
+/
+se soluciona:
+/
+/
+/
+/
+/
+/
+/Quien llama:
+/Reporta:
+/ts realizado:
+/
+/
+/
+/MAC:
+/Potencia:
+/Amarres:
+/Version:
+/Middelware:
+/Telefono:
+/
+/
+se soluciona:
+/
+/
+/
+/
+/
+/
+/Quien llama:
+/Reporta:
+/ts realizado:
+/
+/
+/
+/MAC:
+/Potencia:
+/Amarres:
+/Version:
+/Middelware:
+/Telefono:
+/
+/
+se soluciona:
+/
+/
+/
+/
+/
+/
+/Quien llama:
+/Reporta:
+/ts realizado:
+/
+/
+/
+/MAC:
+/Potencia:
+/Amarres:
+/Version:
+/Middelware:
+/Telefono:
+/
+/
+se soluciona:
+/
+/
+/
+/
+/
+/
+/Quien llama:
+/Reporta:
+/ts realizado:
+/
+/
+/
+/MAC:
+/Potencia:
+/Amarres:
+/Version:
+/Middelware:
+/Telefono:
+/
+/
+se soluciona:
+/
+/
+/
+/
+/
+/
+/Quien llama:
+/Reporta:
+/ts realizado:
+/
+/
+/
+/MAC:
+/Potencia:
+/Amarres:
+/Version:
+/Middelware:
+/Telefono:
+/
+/
+se soluciona:
+/
+/
+/
+/
+/
+/
+/Quien llama:
+/Reporta:
+/ts realizado:
+/
+/
+/
+/MAC:
+/Potencia:
+/Amarres:
+/Version:
+/Middelware:
+/Telefono:
+/
+/
+se soluciona:
+/
+/
+/
+/
+/
+/
+/Quien llama:
+/Reporta:
+/ts realizado:
+/
+/
+/
+/MAC:
+/Potencia:
+/Amarres:
+/Version:
+/Middelware:
+/Telefono:
+/
+/
+se soluciona:
+/
+/
+/
+/
+/
+/
+/Quien llama:
+/Reporta:
+/ts realizado:
+/
+/
+/
+/MAC:
+/Potencia:
+/Amarres:
+/Version:
+/Middelware:
+/Telefono:
+/
+/
+se soluciona:
+/
+/
+/
+/
+/
+/
+/Quien llama:
+/Reporta:
+/ts realizado:
+/
+/
+/
+/MAC:
+/Potencia:
+/Amarres:
+/Version:
+/Middelware:
+/Telefono:
+/
+/
+se soluciona:
+/
+/
+/
+/
+/
+/
+/Quien llama:
+/Reporta:
+/ts realizado:
+/
+/
+/
+/MAC:
+/Potencia:
+/Amarres:
+/Version:
+/Middelware:
+/Telefono:
+/
+/
+se soluciona:
+/
+/
+/
+/
+/
+/
+/Quien llama:
+/Reporta:
+/ts realizado:
+/
+/
+/
+/MAC:
+/Potencia:
+/Amarres:
+/Version:
+/Middelware:
+/Telefono:
+/
+/
+se soluciona:
+/
+/
+/
+/
+/
+/
+/Quien llama:
+/Reporta:
+/ts realizado:
+/
+/
+/
+/MAC:
+/Potencia:
+/Amarres:
+/Version:
+/Middelware:
+/Telefono:
+/
+/
+se soluciona:
+/
+/
+/
+/
+/
+/ </textarea></td>
+      <td style="vertical-align: top; height: 295px; width: 416px;">
+      <table style="text-align: left; width: 415px; height: 35px;" border="1" cellpadding="2" cellspacing="2">
+        <tbody>
+          <tr>
+            <td style="vertical-align: top; height: 27px;"><small><small>WHATSAPP
+/INTERNET /TELEFONO&nbsp; /TELEVISION /CORTE DE FIBRA</small></small><br>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <textarea required="required" maxlength="65525" rows="19" cols="40" name="comment" id="comment">CUENTA:
+OLT:
+FALLA:
+SKILL:
+******************
+CUENTA:
+OLT:
+FALLA:
+SKILL:
+******************
+CUENTA:
+OLT:
+FALLA:
+SKILL:
+******************
+CUENTA:
+OLT:
+FALLA:
+SKILL:
+******************
+CUENTA:
+OLT:
+FALLA:
+SKILL:
+******************
+CUENTA:
+OLT:
+FALLA:
+SKILL:
+******************
+CUENTA:
+OLT:
+FALLA:
+SKILL:
+******************
+CUENTA:
+OLT:
+FALLA:
+SKILL:
+******************
+CUENTA:
+OLT:
+FALLA:
+SKILL:
+******************
+CUENTA:
+OLT:
+FALLA:
+SKILL:
+******************
+CUENTA:
+OLT:
+FALLA:
+SKILL:
+******************
+CUENTA:
+OLT:
+FALLA:
+SKILL:
+******************
+CUENTA:
+OLT:
+FALLA:
+SKILL:
+******************
+CUENTA:
+OLT:
+FALLA:
+SKILL:
+******************
+CUENTA:
+OLT:
+FALLA:
+SKILL:
+******************
+CUENTA:
+OLT:
+FALLA:
+SKILL:
+******************
+CUENTA:
+OLT:
+FALLA:
+SKILL:
+******************
+CUENTA:
+OLT:
+FALLA:
+SKILL:
+******************
+CUENTA:
+OLT:
+FALLA:
+SKILL:
+******************
+CUENTA:
+OLT:
+FALLA:
+SKILL:
+******************
+CUENTA:
+OLT:
+FALLA:
+SKILL:
+******************
+CUENTA:
+OLT:
+FALLA:
+SKILL:
+******************
+CUENTA:
+OLT:
+FALLA:
+SKILL:
+******************
+CUENTA:
+OLT:
+FALLA:
+SKILL:
+******************
+CUENTA:
+OLT:
+FALLA:
+SKILL:
+******************
+CUENTA:
+OLT:
+FALLA:******
+V</textarea></td>
+      <td style="vertical-align: top; height: 295px; width: 328px;"><textarea required="required" maxlength="65525" rows="21" cols="35" name="comment" id="comment">Reporta:
+Motivo:
+entre calles:
+referencia:
+tel:
+tel:
+fecha:
+horario 9 a 16 hrs // 2 a 19 hrs
+---------------------
+Reporta:
+Motivo:
+entre calles:
+referencia:
+tel:
+tel:
+fecha:
+horario 9 a 16 hrs // 2 a 19 hrs
+---------------------
+Reporta:
+Motivo:
+entre calles:
+referencia:
+tel:
+tel:
+fecha:
+horario 9 a 16 hrs // 2 a 19 hrs
+---------------------
+Reporta:
+Motivo:
+entre calles:
+referencia:
+tel:
+tel:
+fecha:
+horario 9 a 16 hrs // 2 a 19 hrs
+---------------------
+Reporta:
+Motivo:
+entre calles:
+referencia:
+tel:
+tel:
+fecha:
+horario 9 a 16 hrs // 2 a 19 hrs
+---------------------
+Reporta:
+Motivo:
+entre calles:
+referencia:
+tel:
+tel:
+fecha:
+horario 9 a 16 hrs // 2 a 19 hrs
+---------------------
+Reporta:
+Motivo:
+entre calles:
+referencia:
+tel:
+tel:
+fecha:
+horario 9 a 16 hrs // 2 a 19 hrs
+---------------------
+Reporta:
+Motivo:
+entre calles:
+referencia:
+tel:
+tel:
+fecha:
+horario 9 a 16 hrs // 2 a 19 hrs
+---------------------
+Reporta:
+Motivo:
+entre calles:
+referencia:
+tel:
+tel:
+fecha:
+horario 9 a 16 hrs // 2 a 19 hrs
+---------------------
+Reporta:
+Motivo:
+entre calles:
+referencia:
+tel:
+tel:
+fecha:
+horario 9 a 16 hrs // 2 a 19 hrs
+---------------------
+Reporta:
+Motivo:
+entre calles:
+referencia:
+tel:
+tel:
+fecha:
+horario 9 a 16 hrs // 2 a 19 hrs
+---------------------
+Reporta:
+Motivo:
+entre calles:
+referencia:
+tel:
+tel:
+fecha:
+horario 9 a 16 hrs // 2 a 19 hrs
+---------------------
+Reporta:
+Motivo:
+entre calles:
+referencia:
+tel:
+tel:
+fecha:
+horario 9 a 16 hrs // 2 a 19 hrs
+---------------------
+Reporta:
+Motivo:
+entre calles:
+referencia:
+tel:
+tel:
+fecha:
+horario 9 a 16 hrs // 2 a 19 hrs
+---------------------
+Reporta:
+Motivo:
+entre calles:
+referencia:
+tel:
+tel:
+fecha:
+horario 9 a 16 hrs // 2 a 19 hrs
+---------------------
+Reporta:
+Motivo:
+entre calles:
+referencia:
+tel:
+tel:
+fecha:
+horario 9 a 16 hrs // 2 a 19 hrs
+---------------------
+Reporta:
+Motivo:
+entre calles:
+referencia:
+tel:
+tel:
+fecha:
+horario 9 a 16 hrs // 2 a 19 hrs
+---------------------
+Reporta:
+Motivo:
+entre calles:
+referencia:
+tel:
+tel:
+fecha:
+horario 9 a 16 hrs // 2 a 19 hrs
+---------------------
+Reporta:
+Motivo:
+entre calles:
+referencia:
+tel:
+tel:
+fecha:
+horario 9 a 16 hrs // 2 a 19 hrs
+---------------------
+Reporta:
+Motivo:
+entre calles:
+referencia:
+tel:
+tel:
+fecha:
+horario 9 a 16 hrs // 2 a 19 hrs
+---------------------
+--------------------- </textarea></td>
+      <td style="vertical-align: top;"><textarea required="required" maxlength="65525" rows="21" cols="26" name="comment" id="comment"> CFO
+individual
+cambio de ont stb
+cambio de ubicacion
+error de aprovisionamiento
+falla en cable de red
+falla en puerto en ont / stb
+Intermitencias en wifi
+no enciende stb
+no enciende ont
+no navega
+ont no enciende
+potencias fuera de rango
+stb no enciende
+se reinicia ont
+se reinicia stb
+sin linea de telefono
+sin ningun servicio
+sin señal del stb
+tono de ocupado </textarea></td>
+    </tr>
+  </tbody>
+</table>
+<br>
+<small><span style="font-family: Arial;"></span></small><small>&nbsp;</small><small><span style="font-family: Arial;">&nbsp; </span><br style="font-family: Arial;">
+</small><br>
+<div style="position: absolute; left: 8px; top: 212px;"><br>
+</div>
+<div style="position: absolute; top: 69px; left: 1276px; right: auto; width: 261px;"><br>
+</div>
+<footer id="colophon" role="contentinfo">Gestor:
+<br>
+</footer><span style="color: rgb(0, 0, 0); font-family: Verdana,Arial,sans-serif; font-size: 17.6px; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; display: inline ! important; float: none;">N1_st_CDMX_Abraham_Frias</span><footer id="colophon" role="contentinfo"><br>
+&nbsp;</footer><span style="color: rgb(77, 81, 86); font-family: arial,sans-serif; font-size: 14px; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; background-color: rgb(255, 255, 255); display: inline ! important; float: none;"><span></span></span><br>
+<br>
+
+<div style="position: absolute; left: 1219px; top: 64px; width: 426px; height: 81px;">
+<p class="comment-form-author">&nbsp;&nbsp; 
+<audio controls="" autoplay="" loop="">
+  	<source src="cronometro.mp3" type="audio/mp3">
+  	Tu navegador no soporta HTML5 audio.
+</source></audio>
+</p>
+
+</div>
+&nbsp;&nbsp;&nbsp;
+<br>
+<br>
+<br>
+<footer id="colophon" role="contentinfo">
+<br>
+<br>
+</footer>
+</div>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<section id="feature" data-stellar-background-ratio="0.5">
+</section>
+<div class="container">
+<div class="row">
+<div class="col-md-12 col-sm-12">
+<div class="section-title">
+<h1><small><a name="INTERNET"></a>INTERNET</small></h1>
+</div>
+</div>
+<div class="col-md-6 col-sm-6">
+<div class="tab-content">
+<div class="tab-pane active" id="tab01" role="tabpanel">
+<div class="tab-pane-item">
+<table style="text-align: left; height: 622px; width: 1929px;" border="1" cellpadding="2" cellspacing="2">
+  <tbody>
+    <tr>
+      <td style="vertical-align: top; height: 295px; width: 368px;"><big style="font-family: Arial;"><span style="font-weight: bold;">NO NAVEGA
+EN ALGUNAS PAGINAS</span> <br>
+      <br>
+-Quien llama:<br>
+-Falla detectada de&nbsp; Internet : no navega en algunas
+paginas&nbsp; <br>
+-ejemplo pagina: <br>
+-Proceso que dio solución Se realiza ts<br>
+-Potencia correcta:<br>
+-Pagina Activa: Falla es solo con red Totalplay<br>
+-En redes ajenas le permite el correcto acceso<br>
+-Se envia: <br>
+&nbsp;&nbsp;&nbsp; -ping <br>
+&nbsp;&nbsp;&nbsp; -tracert <br>
+&nbsp;&nbsp;&nbsp; -nslookup<br>
+&nbsp;&nbsp;&nbsp; -ipconfig/ all <br>
+&nbsp;&nbsp;&nbsp; -archivo HAR<br>
+&nbsp;&nbsp;&nbsp; -ip publica:<br>
+&nbsp;&nbsp;&nbsp; - status hold<br>
+-Se validan DNS : ejemplo&nbsp; <br>
+8.8.8.8 2806:2f0:61::11,2001:4860:486<br>
+-OLT:<br>
+-ont:<br>
+-Dn de contacto&nbsp;&nbsp;&nbsp; <br>
+-Se solucionó&nbsp; NO</big><br>
+      </td>
+      <td style="vertical-align: top; height: 295px; width: 410px;"><big style="font-weight: bold;"><span style="font-family: Arial;">INTERNET
+LENTO POR LAN / WLAN</span></big><br style="font-family: Arial;">
+      <br style="font-family: Arial;">
+      <span style="font-family: Arial;">Quien llama:</span><br style="font-family: Arial;">
+      <span style="font-family: Arial;">Reporta:
+Navegación lenta via
+Wifi / LAN </span><br style="font-family: Arial;">
+      <span style="font-family: Arial;">-se valida que se
+conecta&nbsp;
+a al red del stb/ont la red&nbsp; es 2.4 y&nbsp; 5g (preferente
+5g)</span><br style="font-family: Arial;">
+      <span style="font-family: Arial;">-se cambia
+red&nbsp; y
+contraseña </span><br style="font-family: Arial;">
+      <span style="font-family: Arial;">-se pide conectar
+un solo
+equipo a la red, desconectando los demás equipos. por LAN y/o WLan</span><br style="font-family: Arial;">
+      <span style="font-family: Arial;">-se
+valida&nbsp; distancia
+menos de 8 metros sin nada que obstruya la señal </span><br style="font-family: Arial;">
+      <span style="font-family: Arial;">-equipo que
+conecta a la red: </span><br style="font-family: Arial;">
+      <span style="font-family: Arial;">-en el monitoreo
+con gestor no
+satura ancho de banda </span><br style="font-family: Arial;">
+      <span style="font-family: Arial;">-se aplica
+planchado </span><br style="font-family: Arial;">
+      <span style="font-family: Arial;">-potencias:<br>
+-telefono de contacto:<br>
+-horario<br style="font-family: Arial;">
+      </span><br style="font-family: Arial;">
+      <span style="font-family: Arial;"><span style="font-weight: bold;">Si
+cuenta con PC</span> </span><br style="font-family: Arial;">
+      <span style="font-family: Arial;">-se anexan
+capturas : PING,
+TRACERT y NETSTAT (no mayor a 8 procesos)</span><span style="color: rgb(51, 51, 51); font-family: Montserrat-Medium; font-size: 14px; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: center; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; background-color: rgb(237, 242, 250); display: inline ! important; float: none;"></span><br style="font-family: Arial;">
+      <span style="font-family: Arial;">-monitoreo de
+gestor</span><br style="font-family: Arial;">
+      <span style="font-family: Arial;">-amarre:</span><br style="font-family: Arial;">
+      <br style="font-family: Arial;">
+      <span style="font-family: Arial; font-weight: bold;">Si
+es por
+equipo&nbsp; movil</span><br style="font-family: Arial;">
+      <span style="font-family: Arial;">-Escaneo&nbsp;
+de Wifi de UX
+con 3 o más canales disponibles</span><br style="font-family: Arial;">
+      <span style="font-family: Arial;">-monitoreo de
+gestor</span><br>
+      <br>
+      </td>
+      <td style="vertical-align: top; height: 295px; width: 442px;"><span style="font-family: Arial; font-weight: bold;">JUEGO EN
+LINEA </span><br style="font-family: Arial;">
+      <span style="font-family: Arial;">juego en&nbsp; linea<br>
+&nbsp; <br>
+Quien llama:<br>
+Cuenta:<br>
+Motivo: cliente reporta problemas para hablar con determinados usuarios
+o de actuar como anfitrión en una partida en juegos en linea en un play5<br>
+Proceso: JUEGO EN LINEA<br>
+se valida<br>
+-16 DE POTENCIA<br>
+tipo de conexión:<br>
+juego donde presenta la falla, call of duty WARSON<br>
+se aplica dmz a la consola, se replica la falla<br>
+se valida tipo de nat *MODERADA*<br>
+se valida la falla no es laggeo, si no problemas de interacciones en
+multijugador<br>
+se escala para su atención.<br>
+tel:<br>
+horario: DE 9AM A 6PM<br>
+ip publica:<br>
+se anexa foto de tipo de nat<br>
+Solución: pendiente<br>
+      <br>
+ip publica:<br>
+se anexa foto de tipo de nat<br>
+*ERROR PRESENTADO<br>
+*TIPO DE NAT(PRUEBA DE CONEXION)<br>
+*CUAL ES MI IP PUBLICA<br>
+BLACK LIST DE LA IP PUBLICA<br>
+Solución: pendiente</span><br>
+      <br>
+      </td>
+      <td style="height: 297px; width: 321px; text-align: left; vertical-align: top;"><span style="font-family: Arial; font-weight: bold;">NO NAVEGA<br>
+      <br style="font-family: Arial;">
+      </span><span style="font-family: Arial;">Quien
+llama:&nbsp; </span><br style="font-family: Arial;">
+      <span style="font-family: Arial;">Cuenta:&nbsp; </span><br style="font-family: Arial;">
+      <span style="font-family: Arial;">Motivo: no navega
+en ninguna pagina </span><br style="font-family: Arial;">
+      <span style="font-family: Arial;">Proceso:</span><br style="font-family: Arial;">
+      <span style="font-family: Arial;">se valida </span><br style="font-family: Arial;">
+      <span style="font-family: Arial;">potencia&nbsp; </span><br style="font-family: Arial;">
+      <span style="font-family: Arial;">se valida no tiene
+salida en ping</span><br style="font-family: Arial;">
+      <span style="font-family: Arial;">se valida la falla
+es con todos sus equipos </span><br style="font-family: Arial;">
+      <span style="font-family: Arial;">se valida saldo en
+0</span><br style="font-family: Arial;">
+      <br style="font-family: Arial;">
+      <span style="font-family: Arial;">se reaprovisiona
+ont, falla se replica </span><br style="font-family: Arial;">
+      <span style="font-family: Arial;">se escala para su
+atención </span><br style="font-family: Arial;">
+      <span style="font-family: Arial;">OLT:&nbsp; </span><br style="font-family: Arial;">
+      <span style="font-family: Arial;">ONT:</span><br style="font-family: Arial;">
+      <span style="font-family: Arial;">tel:&nbsp; </span><br style="font-family: Arial;">
+      <span style="font-family: Arial;">horario
+abierto&nbsp; </span><br style="font-family: Arial;">
+      <span style="font-family: Arial;">Solución: no</span></td><td style="vertical-align: top; width: 355px;">NO NAVEGA WIFI<br>
+      <br>
+QUIEN LLAMA:&nbsp; <br>
+MOTIVO DE LLAMADA: NO NAVEGA WIFI<br>
+PASO QUE SOLUCIONÓ FALLA: NO CARGAN DATOS EN UX, APARECEN RESULTADOS EN ROJO<br>
+GESTOR NO ALCANZA ONT POR SER HIBRIDA<br>
+NO NAVEGA WIFI, SE VALIDA EN VARIOS EQUIPOS, PC, CELULAR Y TABLET<br>
+APARECE LA RED WIFI, PERO SIN CONEXION A INTERNET<br>
+SE VALIDA EN LLAMADA ANTERIOR SE APROVISIONO LA ONT<br>
+NO VIENE DE DESENTURAMIENTO<br>
+NO TIENE DIRECCIONAMIENTO EN IP DE DATOS<br>
+NO TIENE SALIDA DE PING<br>
+ONT SIN INTERFERENCIA DE SEÑAL, CLIENTE SE ENCUENTRA A 2 O 3 METROS APROX<br>
+ONT NO TIENE ALGUN DAÑO FISICO<br>
+NOMBRE DE RED: N/A<br>
+DISTANCIA: 3 A 4 METROS<br>
+WIFI: ACTIVO<br>
+TS: EN LLAMADA ANTERIOR SE REINICIO ONT, SE APLICO APROVISIONAMIENTO Y REPLICA FALLA<br>
+SALDO:<br>
+TEL DE CONTACTO:<br>
+HORARIO: ABIERTO<br>
+¿SE SOLUCIONÓ?: NO<br>
+ONT:<br>
+      </td>
+
+    </tr>
+  </tbody>
+</table>
+<h2><br>
+</h2>
+<span style="font-weight: bold;"><br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+</span></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<section id="about" data-stellar-background-ratio="0.5"></section>
+<div class="container">
+<div class="row">
+<div class="col-md-offset-3 col-md-6 col-sm-12">
+<div class="section-title">
+<h1><small><span style="font-family: Arial;"><a name="TELEVISION"></a>TELEVISION</span></small><br style="font-family: Arial;">
+</h1>
+</div>
+</div>
+<div class="col-md-4 col-sm-4">
+<div class="team-thumb"><span style="font-weight: bold; font-family: Arial;"></span>
+<table style="text-align: left; width: 2052px; height: 1778px;" border="1" cellpadding="2" cellspacing="2">
+  <tbody>
+    <tr>
+      <td style="vertical-align: top; width: 371px; height: 307px;"><big style="font-family: Arial;"><span style="font-weight: bold;">Netflix,
+Youtube o Total GO<br>
+      <small><br>
+      </small> </span><small> Quien se comunica:<br>
+Falla reportada:<br>
+TS aplicado:<br>
+MAC:<br>
+POTENCIA:<br>
+AMARRES:<br>
+Teléfono de contacto:<br>
+Horario de atención:<br>
+IP Wan de datos del cliente:&nbsp; <br>
+IP Pública:<br>
+version:<br>
+Middldeware:<br>
+      <br>
+      <br>
+      <br>
+      <br>
+      </small></big> </td>
+      <td style="vertical-align: top; width: 298px; height: 307px;"><big><span style="font-family: Arial;">&nbsp;<span style="font-weight: bold;">
+Sin Banner de Netflix y Amazon </span><br>
+      <small><span style="font-weight: bold;"></span><br>
+-Cuenta:<br>
+- Nombre:<br>
+- Fecha de cambio de plan (si realizo cambio de plan)o fecha de
+activación del servicio:<br>
+- Paquete:<br>
+- Plan: <br>
+- Estatus de activación: N/A PENDIENTE POR REDIMIR REDIMIDA<br>
+- Estatus Redimir: N/A PENDIENTE POR REDIMIR REDIMIDA<br>
+- Motivo: NO APARECE BANER EN PORTAL DE TOTALPLAY PARA ACTIVACION O
+REACTIVACION<br>
+- Adjuntar imagen del error<br>
+      </small></span></big></td>
+      <td style="vertical-align: top; width: 347px; height: 307px;"><span style="font-family: Arial;"><span style="font-weight: bold;">PANTALLA
+NEGRA EN TODOS LOS CANALES</span><br>
+      <br>
+      </span><span style="font-family: Arial;">Quien reporta :<br>
+Falla: PANTALLA NEGRA EN TODOS LOS CANALES , NO TIENE AUDIO, Y SI VE
+MENU<br>
+Proceso:<br>
+-se aplica ts de pantalla en negro<br>
+-se valida en iptv si cuenta con paquete y perfiles<br>
+-se valida vas profile correcto TP_AN_8145_3D_3_3_3_V_A<br>
+-se valida tv y stb encendidos led frontal en color verde fijo<br>
+-se valida si se ve el menú<br>
+-se valida no puede reproducir contenido de anytime y apps como youtube
+( 225 )<br>
+-se valida no se escucha el audio de los canales en vivo<br>
+-se aplica reinicio de stb, se replica la falla<br>
+-se cambia stb con otras conexiones ya que cte cuenta con mas de un stb<br>
+-la falla continua<br>
+&nbsp;-se escala para su atención<br>
+POTENCIA: Potencia ONT: -21<br>
+AMARRES:<br>
+MAC´s afectadas:<br>
+Versión:<br>
+Middleware:<br>
+</span><small><span style="font-family: Arial;">ip datos:<br>
+ip video:</span></small><br>
+      <span style="font-family: Arial;">
+Teléfono de contacto: <br>
+Horario de atención: abierto </span><br>
+      <br>
+      <br>
+      </td>
+      <td style="vertical-align: top; width: 249px; height: 307px;"><span style="font-family: Arial; font-weight: bold;">SIN AUDIO EN
+ALGUNOS
+CANALES O SE SALTAN CANALES</span><br style="font-family: Arial;">
+      <br style="font-family: Arial;">
+      <span style="font-family: Arial;">Quien se comunica:</span><br style="font-family: Arial;">
+      <span style="font-family: Arial;">Falla reportada: </span><br style="font-family: Arial;">
+      <span style="font-family: Arial;">TS aplicado:</span><br style="font-family: Arial;">
+      <span style="font-family: Arial;">MAC´s:</span><br style="font-family: Arial;">
+      <span style="font-family: Arial;">POTENCIA:</span><br style="font-family: Arial;">
+      <span style="font-family: Arial;">AMARRES:</span><br style="font-family: Arial;">
+      <span style="font-family: Arial;">Teléfono:</span><br style="font-family: Arial;">
+      <span style="font-family: Arial;">Horario de
+atención:</span><br style="font-family: Arial;">
+      <span style="font-family: Arial;">Nombre y número de
+canal:</span><br style="font-family: Arial;">
+      <span style="font-family: Arial;">Version:</span><br style="font-family: Arial;">
+      <span style="font-family: Arial;">Middleware:<br>
+Canales donde se presenta la falla: <br>
+      </span><br>
+      </td>
+      <td style="vertical-align: top; width: 280px;"><span style="font-family: Arial; font-weight: bold;">Obteniendo
+dirección IP</span><small><br style="font-family: Arial;">
+      <span style="font-family: Arial;">&nbsp;&nbsp;&nbsp; </span><br style="font-family: Arial;">
+      <span style="font-family: Arial;">Quien se
+comunica:&nbsp; </span><br style="font-family: Arial;">
+      <span style="font-family: Arial;">Falla
+reportada:&nbsp; Mensaje de Error Obteniendo dirección IP en un
+STB. </span><br style="font-family: Arial;">
+      <span style="font-family: Arial;">TS
+aplicado:&nbsp; </span><br style="font-family: Arial;">
+      <span style="font-family: Arial;">Cliente no cuenta
+con un switch</span><br style="font-family: Arial;">
+      <span style="font-family: Arial;">Cable de red bien
+conectado en la ONT y STB </span><br style="font-family: Arial;">
+      <span style="font-family: Arial;">Servicio de
+internet funcionando correctamente </span><br style="font-family: Arial;">
+      <span style="font-family: Arial;">STB no esta
+blacklist</span><br style="font-family: Arial;">
+      <span style="font-family: Arial;">Cliente no creo
+whitelist</span><br style="font-family: Arial;">
+      <span style="font-family: Arial;">Servicio de
+internet no enrutado </span><br style="font-family: Arial;">
+      <span style="font-family: Arial;">Se Desconecta
+conecta el cable de red </span><br style="font-family: Arial;">
+      <span style="font-family: Arial;">Se reinicia el STB</span><br style="font-family: Arial;">
+      <span style="font-family: Arial;">Se cambia de
+puerto el cable de red y se reinicia la STB</span><br style="font-family: Arial;">
+      <span style="font-family: Arial;">VLAN de datos
+configurada</span><br style="font-family: Arial;">
+      <span style="font-family: Arial;">Se reinicia la ONT
+y la falla continua </span><br style="font-family: Arial;">
+      <span style="font-family: Arial;">MAC´s afectadas: </span><br style="font-family: Arial;">
+      <span style="font-family: Arial;">POTENCIA:&nbsp; </span><br style="font-family: Arial;">
+      <span style="font-family: Arial;">AMARRES:&nbsp; </span><br style="font-family: Arial;">
+      <span style="font-family: Arial;">Versión:&nbsp; </span><br style="font-family: Arial;">
+      <span style="font-family: Arial;">Middleware: <br>
+ip datos:<br>
+ip video:<br style="font-family: Arial;">
+ </span>
+      <span style="font-family: Arial;">Teléfono de
+contacto:&nbsp; </span><br style="font-family: Arial;">
+      <span style="font-family: Arial;">Horario de
+atención: Cualquier horario</span></small> <big> </big></td>
+      <td style="vertical-align: top; width: 355px;"><span style="font-family: Arial; font-weight: bold;">ALGUNOS CANALES ESTAN
+EN NEGRO<br>
+      <br>
+      </span>Quien se comunica:<br>
+Falla reportada (Descripción detallada): algunos canales estan en negro<br>
+TS aplicado:<br>
+/no&nbsp; son sólo los canales locales<br>
+/no se replica en&nbsp; maquetas<br>
+/se reinicia el stb sin exito<br>
+/el paquete que tiene aprovisionado en IPTV&nbsp; Manager
+corresponde&nbsp; la región que pertenece la OLT<br>
+/no tiene&nbsp; audio<br>
+/intenta cambiar de canal con CH+/CH- y regrese al canal donde&nbsp;
+presenta la falla<br>
+/se reinicia el stb&nbsp; sin exito&nbsp; se escala para su atencion <br>
+/ejemplo de canales :<br>
+/<br>
+/<br>
+/la falla es en todos los stb&nbsp; ´s<br>
+MAC´s afectadas:<br>
+POTENCIA:<br>
+AMARRES:<br>
+Versión:<br>
+Middleware:<br>
+      <small><span style="font-family: Arial;">ip datos:<br>
+ip video:</span></small><br>
+Teléfono de contacto:<br>
+Horario de atención: abierto<br>
+se soluciona:no<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 371px;">ANYTIME <br>
+      <br>
+&nbsp;Quien se comunica:<br>
+Falla reportada (Descripción detallada): &nbsp;&nbsp;&nbsp; presenta
+error 404 en anytime en todos los canales<br>
+TS aplicado:&nbsp; se pide reproducir varios de distinos canales&nbsp;
+horarios&nbsp; la falla es&nbsp; igual&nbsp; . la&nbsp; falla la tiene
+desde un&nbsp; mes<br>
+&nbsp;/ se escala para su atencion<br>
+MAC´s afectadas:<br>
+POTENCIA: -25.00<br>
+AMARRES:<br>
+ejemplos<br>
+&nbsp;canal&nbsp; horario&nbsp; programa<br>
+&nbsp;canal&nbsp; horario&nbsp; programa<br>
+&nbsp;canal&nbsp; horario&nbsp; programa<br>
+      <br>
+hora en que trata de reproducir<br>
+Versión:<br>
+Middleware:<br>
+IP Wan de datos del cliente:<br>
+IP de vídeo del cliente:<br>
+IP Pública:<br>
+Teléfono de contacto:<br>
+Horario de atención:<br>
+      </td>
+      <td style="vertical-align: top; width: 298px;"><big style="font-family: Arial;"><small><span style="font-weight: bold;">YOUTUBE</span>
+      <br>
+Quien se comunica:<br>
+Falla reportada: no abre youtube&nbsp; en los tres stb , solo se queda
+cargando ,<br>
+TS aplicado: se valida&nbsp; que la falla&nbsp; en todas las apps de
+los stb<br>
+&nbsp;-se confirma&nbsp; que youtube&nbsp; funciona en&nbsp; otros
+equipos&nbsp; como en celulares<br>
+-el internet funciona&nbsp; correctamente<br>
+-se reinicia ont<br>
+-se reinicia stb<br>
+-sin exito<br>
+MAC:<br>
+POTENCIA:<br>
+AMARRES:<br>
+Teléfono de contacto:<br>
+Horario de atención: abierto<br>
+IP Wan de datos:<br>
+ip wan video:<br>
+IP Pública:<br>
+version:<br>
+Middldeware:<br>
+se soluciona: no</small></big> </td>
+      <td style="vertical-align: top; width: 347px;"><span style="font-weight: bold;">ALEXA</span><br>
+Quien se comunica:<br>
+Falla reportada (Descripción detallada): Cliente reporta que no
+responden los comandos de voz como Alexa, volumen al 50 por ciento,
+Alexa, quiero ver venga la alegría, Alexa, apaga Totalplay<br>
+TS aplicado:<br>
+-Cliente confirma que al acceder a YouTube se reproduce correctamente
+los videos, el internet funcionando correctamente<br>
+-Se desactiva y activa el Skill de Totalplay pero la falla continua<br>
+De qué manera ingreso: menu-&gt;ajustes de Alexa-&gt;cliente tiene su
+cuenta vinculada de amazon<br>
+MAC´s afectadas:<br>
+POTENCIA:<br>
+AMARRES:<br>
+IP Wan de datos del cliente:<br>
+IP Pública:<br>
+Versión:<br>
+Middleware:<br>
+Teléfono de contacto:<br>
+Horario de atención: a cualquier hora<br>
+solucion: no<br>
+      </td>
+      <td style="vertical-align: top;"><span style="font-weight: bold;">DISNEY</span><br>
+-Cuenta:&nbsp; <br>
+-Problema que reporta: COMBO+ SIN BANNER DE ACTIVACION<br>
+-Paquete actual:<br>
+-Correo que tiene&nbsp; vinculado en app o el cual se va a vincular a
+app:<br>
+-Correo en dashboard:<br>
+-Paquete con el que nacio:<br>
+-Fecha de ultimo adeudo(validar si tiene folios de
+cobranza):&nbsp;&nbsp;&nbsp; <br>
+-Validar si tiene folios en estatus abierto por mismo problema: SIN
+FOLIOS ABIERTOS <br>
+-Estatus en dashboard e iptv(pendiente por redimir/redimido/cancelado):
+N/A<br>
+-Contraseña de mitotalplay.com(indicarle a cliente que por cuestiones
+de seguriad al finalizar llamada se sugiere cambio de contraseña en
+pagina): ThorOdnJane1987<br>
+Numero de contacto:<br>
+FOTO DEL ERROR<br>
+      </td>
+      <td style="vertical-align: top;">Disney codigo de error 36<br>
+      <br>
+Quien se comunica:<br>
+Falla reportada (Descripción detallada): al tratar de reproducir
+cualquier Titulo dentro de la app de Disney+ le arroja mensaje "lo
+sentimos no se puede mostrar el video, codigo de error 36".<br>
+TS aplicado: De acuerdo a incidencias solo se aplica Reinicio de STB<br>
+De qué manera ingreso: Desde el menú - apps - disney +<br>
+MAC´s afectadas:<br>
+POTENCIA: Nivel excelente -21 dBm<br>
+AMARRES:<br>
+IP Wan de datos del cliente:<br>
+IP Pública:<br>
+Versión:<br>
+Middleware:<br>
+Teléfono de contacto:<br>
+Horario de atención:<br>
+- marca de TV:<br>
+- modelo de TV:<br>
+      </td>
+      <td style="vertical-align: top; width: 355px;">TIEMPO DE ESPERA AGOTADO<br>
+      <br>
+Quien se comunica: BEATRIZ LOPEZ SALAS<br>
+Falla reportada: CLIENTE REPORTA MENSAJE EN SU TV, TIEMPO DE ESPERA AGOTADO PRECIONE OK PARA INTENTAR DE NUEVO<br>
+TS aplicado:<br>
+MENSAJE DE ERROR 0,-1,500, 200, 400, 606E0 EN CANALES EN VIVO<br>
+SE VALIDA EN IPTV PAQUETE Y PERFILES CARGADOS<br>
+SE PRECIONA OK SOBRE EL ERROR PERO FALLA SE REPLICA <br>
+SE APLICA REINICIO DE STB, SE REPLICA LA FALLA<br>
+SE APLICA REINICIO DE ONT, FALLA SE REPLICA<br>
+MAC´s afectadas: <br>
+POTENCIA:<br>
+AMARRES:<br>
+Versión:<br>
+Middleware:<br>
+Telefono de contacto:<br>
+Horario de localización:<br>
+solución: no<br>
+      </td>
+    </tr><tr>
+      <td style="vertical-align: top; height: 471px; width: 371px;">NETFLIX&nbsp; NW-2-5<br>
+      <br>
+&nbsp;Quien se comunica:<br>
+Falla reportada: Reporta que al ingresar a NETFLIX desde el STB arroja error NW-2-5<br>
+TS aplicado:<br>
+Cliente menciona que de otros equipo ingresa correctamente a Netflix<br>
+- Potencia:<br>
+- amarres:<br>
+- Se restablecer Netflix desde mas información<br>
+- Se aplica reinicio de ONT desconectado de la toma de corriente<br>
+- Continua sin ingresar<br>
+      <br>
+De qué manera ingreso: Desde el menú &gt; apps &gt; o desde el canal<br>
+MAC´s afectadas:<br>
+POTENCIA:<br>
+AMARRES:<br>
+IP Wan de datos del cliente:<br>
+IP Pública:<br>
+Versión:<br>
+Middleware:<br>
+Teléfono de contacto:<br>
+Horario de atención:<br>
+      </td>
+      <td style="vertical-align: top; height: 471px; width: 298px;"><br>
+      </td>
+      <td style="vertical-align: top; height: 471px;"><br>
+      </td>
+      <td style="vertical-align: top; height: 471px;"><br>
+      </td>
+      <td style="vertical-align: top; height: 471px;"><br>
+      </td>
+      <td style="vertical-align: top; height: 471px;"><br>
+      </td>
+    </tr>
+
+  </tbody>
+</table>
+&nbsp;<br>
+<span style="font-weight: bold;">
+<br>
+<br>
+&nbsp;
+</span><br>
+<span style="font-weight: bold;"><br>
+<br>
+<br>
+<br>
+<br>
+<br>
+</span><span style="font-weight: bold;">
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+</span></div>
+</div>
+</div>
+</div>
+
+<section id="testimonial" data-stellar-background-ratio="0.5">
+</section><section id="pricing" data-stellar-background-ratio="0.5"></section>
+<div class="container">
+<div class="row">
+<div class="col-md-12 col-sm-12">
+<div class="section-title">
+<h1><small><a name="TELEFONO"></a>TELEFONO</small></h1>
+</div>
+</div>
+<div class="col-md-4 col-sm-6">
+<div style="width: 407px; height: 864px;" class="pricing-bottom">
+<table style="text-align: left; height: 409px; width: 982px;" border="1" cellpadding="2" cellspacing="2">
+  <tbody>
+    <tr>
+      <td style="vertical-align: top; height: 405px; width: 434px;"><big style="font-family: Arial;"><span style="font-weight: bold;">Falla en
+llamadas entrantes /&nbsp; salientes</span><br style="font-weight: bold;">
+      <span style="font-weight: bold;">parcial / general
+(Es la misma
+plantilla)</span><br>
+      <br>
+Cuenta:<br>
+Saldo:<br>
+Nombre:<br>
+Tel. de contacto<br>
+Dirección de instalación con CP:<br>
+Horario de atención:<br>
+OLT:<br>
+ONT:<br>
+Paquete:<br>
+DN portado/NO:<br>
+portado:<br>
+DN – Origen:<br>
+DN – Destino:<br>
+Grabación:<br>
+Forma de Marcación:<br>
+Potencias:<br>
+      </big><br>
+      <br>
+      </td>
+      <td style="vertical-align: top; height: 405px; width: 530px; font-family: Arial;"><big style="font-weight: bold;"><big style="font-weight: bold;">T</big>ONO
+DE OCUPADO</big><br>
+      <br>
+-Cuenta:<br>
+-Saldo:<br>
+-Nombre:<br>
+-Tel de contacto:<br>
+-Dirección de instalación:<br>
+-Horario de atención:<br>
+-OLT:<br>
+-ONT:<br>
+-Paquete:<br>
+-DN portado/NO portado:<br>
+-Realizar prueba con teléfono alámbrico / inalámbrico <br>
+&nbsp;conectado directamente a la ONT sin filtros y&nbsp;
+extensiones:<br>
+-Realizar pruebas con otro equipo telefónico y otro cable:<br>
+-Desde cuando se presenta falla:<br>
+-Realiza prueba en puerto TEL 2 (Documentar resultado):<br>
+-Estado de leds:<br>
+-Status de DN en U2000<br>
+(POTS):<big><br>
+      <br>
+      </big></td>
+    </tr>
+  </tbody>
+</table>
+<h2><br>
+</h2>
+&nbsp;<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<span style="font-weight: bold;"><br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+</span><span class="pricing-dollar"><br>
+</span> <small> </small> <small><span style="font-weight: bold;"><br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+</span></small></div>
+</div>
+</div>
+</div>
+
+<div class="container">
+<div class="row">
+<div class="col-md-offset-1 col-md-10 col-sm-12">
+<form style="margin-top: 60px; height: 473px;" id="contact-form" role="form" action="" method="post"> <br>
+  <span style="font-weight: bold;"><big><a name="PLANTILLAS_PARA_GESTOR_IPTV"></a>PLANTILLAS
+PARA GESTOR
+IPTV</big><br>
+  <br>
+  </span>
+  <table style="text-align: left; width: 1358px; height: 414px;" border="1" cellpadding="2" cellspacing="2">
+    <tbody>
+      <tr>
+        <td style="vertical-align: top; height: 388px; width: 213px;"><big><small><span style="font-weight: bold;">REGISTRAR UN STB&nbsp; </span><br>
+CUANTOS DECOS TIENE EN SITIO: 3 <br>
+OLT: <br>
+Mac(s):&nbsp; <br>
+ID(s): <br>
+Cuenta:&nbsp; <br>
+Folio inconsistencia <br>
+Motivo: <br>
+Falla reportada:<br>
+        <br>
+        <span style="font-weight: bold;">&nbsp;Restricción de VOD:</span><br>
+*Cuenta:<br>
+*Folio:<br>
+*Petición: <br>
+</small>
+        </big></td>
+        <td style="vertical-align: top; height: 388px; width: 329px;"><big><span style="font-weight: bold;">CARGAR PARRILLA O ALGUN ADICIONAL<br>&nbsp;<br>
+</span>Petición: CARGAR PARRILLA, PAQUETE O ALGUN ADICIONAL<br>
+Parrilla contratada o por promoción:<br>
+OLT:<br>
+Cuenta:<br>
+Folio inconsistencia (cerrada):<br>
+Falla:<br>
+INDICAR MOTIVO: ejemplo cabio de plan<br>
+
+        <span style="font-weight: bold;"></span></big></td>
+        <td style="vertical-align: top; height: 388px; width: 331px; font-family: Arial;"><big><span style="font-weight: bold;"></span><span style="font-weight: bold;">CAMBIAR
+NIP, GENERAR PERFIL O ACTUALIZAR ALGÚN DATO EN IPTV<br>
+        </span><small><span style="font-family: Arial;">Correo
+registrado en dashboard:</span><br style="font-family: Arial;">
+        <span style="font-family: Arial;">Código postal:</span><br style="font-family: Arial;">
+        <span style="font-family: Arial;">Cuenta:</span><br style="font-family: Arial;">
+        <span style="font-family: Arial;">Nombre del perfil o dato por
+actualizar (Correo, nip, DN, nombre por alguna corrección de falta de
+ortografía en IPTV):</span></small><span style="font-weight: bold;"><br>
+        </span> </big></td>
+        <td style="vertical-align: top; width: 219px; font-family: Arial; height: 388px;"><span style="font-weight: bold;">CAMBIO DE ESTATUS</span> <br>
+Cuenta:<br>
+Olt:<br>
+Código postal:<br>
+Fecha de activación:<br>
+estatus actual:<br>
+estatus a corregir:<br>
+Motivo: cambio de plan​<br>
+        <br>
+SALDO: <br>
+        <br>
+        <span style="font-weight: bold;">CAMBIO DE REGION</span><br>
+falla :<br>
+motivo: <br>
+Cuenta:<br>
+Olt:<br>
+Incorrecta:<br>
+Correcta​​​​​​​​​​​:​​​​​​​​ ​​​​​​​​</td><td style="vertical-align: top; width: 234px; height: 388px;"><br>
+        </td>
+
+      </tr>
+    </tbody>
+  </table>
+  <big style="font-weight: bold; font-family: Arial;"><big><br>
+  </big></big><br>
+  <table style="text-align: left; width: 1212px; height: 452px;" border="1" cellpadding="2" cellspacing="2">
+    <tbody>
+      <tr>
+        <td style="height: 437px; vertical-align: top; width: 323px;"><big style="color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px;"><span style="font-family: Arial;"><small>FALLA EN SISTEMA<br>
+        <br>
+        </small></span></big><small style="color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px;"><span style="font-family: Arial;">NOMBRE: Abraham frías Aguirre</span><br style="font-family: Arial;">
+        <span style="font-family: Arial;">ACD: 29539</span><br style="font-family: Arial;">
+        <span style="font-family: Arial;">Número Celular o local:
+5531059100</span><br style="font-family: Arial;">
+        <span style="font-family: Arial;">Extensión:</span><br style="font-family: Arial;">
+        <span style="font-family: Arial;">Anydesk: 685 297 718</span><br style="font-family: Arial;">
+        <span style="font-family: Arial;">Proveedor de Internet:
+totalplay</span><br style="font-family: Arial;">
+        <span style="font-family: Arial;">Tipo de conexión: cable</span><br style="font-family: Arial;">
+        <span style="font-family: Arial;">Tipo de equipo:&nbsp;
+asignado tp</span><br style="font-family: Arial;">
+        <span style="font-family: Arial;">Campaña/Área: soporte
+totalplay</span><br style="font-family: Arial;">
+        </small><span style="color: rgb(0, 0, 0); font-size: 19.2px; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; font-family: Arial;"><small>Descripción
+breve del problema:<br>
+        <br>
+        <br>
+        <span style="font-weight: bold;">Cambio de equipos con técnicos
+en sitio.</span><br>
+Cuenta: <br>
+Cliente: <br>
+Nombre de Técnico:&nbsp;&nbsp; <br>
+Descripción: <br>
+OS:<br>
+Ticket:<br>
+        </small></span> <br>
+        <big style="color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px;"><span style="font-family: Arial;"><small> <span style="font-weight: bold;"><br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        </span></small></span></big></td>
+        <td style="height: 437px; vertical-align: top; width: 316px;"><span style="color: rgb(0, 0, 0); font-size: medium; font-style: normal; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; font-family: Arial; font-weight: bold;">CIERRE
+DE FOLIOS</span><br style="color: rgb(0, 0, 0); font-size: medium; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; font-family: Arial;">
+        <br style="color: rgb(0, 0, 0); font-size: medium; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; font-family: Arial;">
+        <span style="color: rgb(0, 0, 0); font-size: medium; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; font-family: Arial;">OS:</span><br style="color: rgb(0, 0, 0); font-size: medium; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; font-family: Arial;">
+        <span style="color: rgb(0, 0, 0); font-size: medium; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; font-family: Arial;">FOLIO:</span><br style="color: rgb(0, 0, 0); font-size: medium; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; font-family: Arial;">
+        <span style="color: rgb(0, 0, 0); font-size: medium; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; font-family: Arial;">CUENTA:</span><br style="color: rgb(0, 0, 0); font-size: medium; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; font-family: Arial;">
+        <span style="color: rgb(0, 0, 0); font-size: medium; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; font-family: Arial;">PORQUE
+SE CIERRA:&nbsp;</span><br style="color: rgb(0, 0, 0); font-size: medium; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; font-family: Arial;">
+        <big style="color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px;"><span style="font-family: Arial;"><small>QUIEN LO SOLICITA:</small><br>
+        <br>
+        <span style="font-weight: bold;">Se solicita apoyo
+visita técnica</span><br>
+        <span style="font-family: Arial;">Nombre:</span><br style="font-family: Arial;">
+        <span style="font-family: Arial;">cuenta:&nbsp;&nbsp;</span><br style="font-family: Arial;">
+        <span style="font-family: Arial;">folio:&nbsp;&nbsp;</span><br style="font-family: Arial;">
+        <span style="font-family: Arial;">os:&nbsp;&nbsp;&nbsp;</span><br style="font-family: Arial;">
+        <span style="font-family: Arial;">cluster:&nbsp;</span><br style="font-family: Arial;">
+        <span style="font-family: Arial;">plaza:</span><br style="font-family: Arial;">
+        <span style="font-family: Arial;">distrito:&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;</span><br style="font-family: Arial;">
+        <span style="font-family: Arial;">region:&nbsp;&nbsp;&nbsp;</span><br style="font-family: Arial;">
+        <span style="font-family: Arial;">contacto:&nbsp;&nbsp;&nbsp;&nbsp;</span><br style="font-family: Arial;">
+        <span style="font-family: Arial;">incumplimientos:</span><br style="font-family: Arial;">
+        <span style="font-family: Arial;">comentario:</span></span></big></td>
+        <td style="height: 437px; vertical-align: top; width: 261px;"><span style="color: rgb(0, 0, 0); font-size: medium; font-style: normal; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; font-family: Arial; font-weight: bold;">Llamada
+entra sin Audio</span><br style="color: rgb(0, 0, 0); font-size: medium; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; font-family: Arial;">
+        <span style="color: rgb(0, 0, 0); font-size: medium; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; font-family: Arial;">Nombre
+completo de Operador:</span><br style="color: rgb(0, 0, 0); font-size: medium; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; font-family: Arial;">
+        <span style="color: rgb(0, 0, 0); font-size: medium; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; font-family: Arial;">Nombre
+de Supervisor:</span><br style="color: rgb(0, 0, 0); font-size: medium; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; font-family: Arial;">
+        <span style="color: rgb(0, 0, 0); font-size: medium; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; font-family: Arial;">Hora
+que ingresó la llamada:</span><br style="color: rgb(0, 0, 0); font-size: medium; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; font-family: Arial;">
+        <span style="color: rgb(0, 0, 0); font-size: medium; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; font-family: Arial;">Número
+de origen (quién le marco):</span><br style="color: rgb(0, 0, 0); font-size: medium; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; font-family: Arial;">
+        <span style="color: rgb(0, 0, 0); font-size: medium; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; font-family: Arial;">Login</span><br style="color: rgb(0, 0, 0); font-size: medium; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; font-family: Arial;">
+        <span style="color: rgb(0, 0, 0); font-size: medium; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; font-family: Arial;">Extensión:<br>
+        <br>
+        </span><big style="color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px;"><span style="font-family: Arial;"><small><span style="font-weight: bold;">LLAMADAS
+CORTADAS</span><br>
+DN:<br>
+Hora inicio llamada:<br>
+Hora fin Llamada:<br>
+Ext:<br>
+Login ID :<br>
+Estación : virtual</small></span></big><br>
+        <big style="color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px;"><span style="font-weight: bold;"> <br>
+        <br>
+        <small><span style="font-family: Arial;">VACACIONES</span></small></span></big><span style="color: rgb(0, 0, 0); font-size: medium; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; font-family: Arial;"></span><br style="color: rgb(0, 0, 0); font-size: medium; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; font-family: Arial;">
+        <span style="color: rgb(0, 0, 0); font-size: medium; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; font-family: Arial;">Num
+empleado:</span><br style="color: rgb(0, 0, 0); font-size: medium; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; font-family: Arial;">
+        <span style="color: rgb(0, 0, 0); font-size: medium; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; font-family: Arial;">Nombre:</span><br style="color: rgb(0, 0, 0); font-size: medium; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; font-family: Arial;">
+        <span style="color: rgb(0, 0, 0); font-size: medium; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; font-family: Arial;">Tipo
+de solicitud: &nbsp;&nbsp;&nbsp;</span><br style="color: rgb(0, 0, 0); font-size: medium; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; font-family: Arial;">
+        <span style="color: rgb(0, 0, 0); font-size: medium; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; font-family: Arial;">Días
+solicitados:</span></td>
+        <td style="vertical-align: top;"><span style="color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: medium; font-style: normal; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; font-weight: bold;">CITRIX</span><br style="color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: medium; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px;">
+        <span style="color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: medium; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; float: none; display: inline ! important;">totalplayvdi\15010689</span><br style="color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: medium; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px;">
+        <span style="color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: medium; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; float: none; display: inline ! important;">Fia1987chach0@2</span><br style="color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: medium; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px;">
+        <span style="color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: medium; font-style: normal; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; font-weight: bold;">Avaya</span><br style="color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: medium; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px;">
+        <span style="color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: medium; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; float: none; display: inline ! important;">6405913<br>
+        <span style="font-weight: bold;">Intranet</span><br style="color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: medium; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px;">
+        </span> <span style="color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: medium; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; float: none; display: inline ! important;">capa6.tp@tkmcsc.com
+        <br>
+SoporteVespertino123</span><span style="color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: medium; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; float: none; display: inline ! important;"></span><span style="color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: medium; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; float: none; display: inline ! important;"></span><small style="color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px;"><br style="font-family: Arial;">
+        </small><span style="color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: medium; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; float: none; display: inline ! important;"></span><span style="color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: medium; font-style: normal; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; font-weight: bold;">usuario:<span>&nbsp;</span></span><span style="color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: medium; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; float: none; display: inline ! important;">15010689</span><span style="font-family: &quot;Times New Roman&quot;;"><span style="font-weight: bold;"><br>
+iptv<br>
+        </span></span><span style="color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: medium; font-style: normal; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; font-weight: bold;"></span><span style="color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: medium; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; float: none; display: inline ! important;"></span><span style="color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: medium; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; float: none; display: inline ! important;"></span>Tplay12475636play1<br style="color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: medium; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px;">
+        <span style="color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: medium; font-style: normal; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; font-weight: bold;">chat</span><span style="color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: medium; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; float: none; display: inline ! important;">:</span><br style="color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: medium; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px;">
+        <small style="color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px;"><span style="font-family: Arial;">SOP6899</span><br style="font-family: Arial;">
+        <span style="font-weight: bold; font-family: Arial;"><big>ux</big>:</span></small><span style="color: rgb(0, 0, 0); font-size: medium; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; font-family: Arial;"><span><span>&nbsp;</span></span>AccesoUXTP35YH76<br>
+        <span style="font-weight: bold;">Evaluacion calidad :</span><br>
+contraseña : Fiaaa1987chacho<br>
+usuario&nbsp; : 15010689<br>
+&nbsp;<span style="font-weight: bold;">CITRIX :</span><br>
+https://totalplay.cloud.com<br>
+        <span style="font-weight: bold;">llave maestra:</span><br>
+15010689<br>
+Fiaaa1987chacho.1<br>
+respuesta secreta : <br>
+la moronga<br>
+        </span><span style="color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: medium; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; float: none; display: inline ! important;">abraham.frias@totalplay.com.com.mx</span><br style="color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: medium; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px;">
+        <span style="color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: medium; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; float: none; display: inline ! important;">MiPrimerAcceso559898<br>
+citrix: abraham.frias@tkmcsc.com<br>
+afriasa@totalplay.com.mx<br>
+llave maestra: Tplay12475636play1<br>
+correo: 06MiprimerAcceso**<br>
+        </span></td>
+      </tr>
+    </tbody>
+  </table>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <a name="Totalshop"></a><br>
+  <br>
+  <br>
+  <br>
+Totalshop<br>
+  <br>
+  <table style="text-align: left; width: 653px; height: 393px;" border="1" cellpadding="2" cellspacing="2">
+    <tbody>
+      <tr>
+        <td style="vertical-align: top;"><br>
+        <br>
+Quien se comunica:<br>
+Falla reportada: cliente no puede realizar compras en totalshop ni
+desde el portal ni desde el stb, <br>
+cuando lo intenta realizar desde el portal no le permite llenar 2
+campos los de tel y el de correo,<br>
+en el stb se congela la pantalla y no permite avanzar<br>
+TS aplicado: total shop<br>
+De qué manera ingreso: Desde el menú<br>
+se aplica reinicio de ont, falla se replica<br>
+MAC´s afectadas:<br>
+POTENCIA:<br>
+AMARRES:<br>
+IP Wan de datos del cliente:<br>
+IP Pública:<br>
+Versión:<br>
+Middleware:<br>
+Teléfono de contacto:<br>
+Horario de atención:<br>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+  <a name="Corte_de_fibra"></a><br>
+  <br>
+  <br>
+  <br>
+  <br>
+Corte de fibra<br>
+  <br>
+  <table style="text-align: left; height: 284px; width: 1036px;" border="1" cellpadding="2" cellspacing="2">
+    <tbody>
+      <tr>
+        <td style="vertical-align: top; width: 489px;"><textarea id="comment" name="comment" cols="60" rows="22" maxlength="65525" required="required">//Corte de fibra invidual
+//
+//
+//Quien llama:
+//Reporta: sin ningun servicio
+//ts realizado: Tiene LOS en rojo
+// se envia visita tecnica por CFO
+//se soluciona: no
+/
+/
+/
+/Quien llama:
+/Reporta: sin ningun servicio
+/ts realizado: tiene PON parpadeando
+/ no es posible reaprovisionar la ont // tiene alarmas de warning por CFO //
+/se envia visita tecnica
+/
+se soluciona: no
+/
+/ </textarea></td>
+        <td style="vertical-align: top; width: 495px;"><textarea required="required" maxlength="65525" rows="22" cols="60" name="comment" id="comment">//Corte masivo
+//
+//
+//Quien llama:
+//Reporta: sin ningun servicio
+//ts realizado: es falla general se le pide tiempo de espera
+// se valida en incidencias
+// //
+se soluciona: no</textarea></td>
+      </tr>
+    </tbody>
+  </table>
+&nbsp;<br>
+  <br>
+/<br>
+/ <br>
+/<a href="#regresar">Regresar</a><br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<a name="Intermitencias_wifi"></a><br>
+  <br>
+  <br>
+  <br>
+  <br>
+Intermitencias&nbsp; wifi<br>
+/<br>
+// <br>
+/<textarea id="comment" name="comment" cols="70" rows="25" maxlength="65525" required="required"> Quien llama:
+// Reporta: intermitencias wifi / Internet lento por wifi
+// ts realizado: se conecta cerca de la ont
+// no hay nada que obstruya la señal de wifi
+// antenas en posicion correcta
+// conecta pocos equipos
+// se cambia decanal de frecuencia a uno libre
+// se cambia red y contraseña de wifi
+// se aplica reaprovisionamiento de la ont
+//se soluciona: si
+/ </textarea><br>
+/<br>
+/<br>
+/<a href="#regresar">Regresar</a><br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+  <a name="si_senal_de_tv"></a><br>
+  <br>
+  <br>
+  <br>
+  <br>
+Sin señal de&nbsp; tv <br>
+  <br>
+/<textarea id="comment" name="comment" cols="60" rows="18" maxlength="65525" required="required">// Quien llama:
+// Reporta: sin señal del stb
+// ts realizado: se sintoniza en la entrada correcta
+// MAC :
+// se cambia de entrada en la tv
+// se cambia cable hdmi
+// se reinicia stb
+// se soluciona: si
+/ </textarea><br>
+/<br>
+/<br>
+/<a href="#regresar">Regresar</a><br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+  <a name="Pantalla_negra__todos_los_canales_"></a><br>
+  <br>
+  <br>
+  <br>
+  <br>
+Pantalla negra&nbsp;
+( todos los canales )<br>
+  <br>
+/<textarea id="comment" name="comment" cols="80" rows="28" maxlength="65525" required="required">//Quien llama:
+//Reporta: Todos los canales estan en negro
+// MAC :
+//ts realizado: si tiene graficos de menu , volumen y logos de los
+canales
+// tiene perfiles y paquete en iptv / XML (vasprofile) configurado
+//
+// si tiene audio / reiniciar STB / pantalla negra audio //
+// no tiene audio / reinicar STB / pantalla negra multicast
+//se soluciona: si /
+/ </textarea><br>
+/<br>
+/<br>
+/<a href="#regresar">Regresar</a><br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+  <a name="potencias_fuera_de_rango"></a><br>
+  <br>
+  <br>
+  <br>
+Potencias&nbsp; fuera de rango<br>
+  <br>
+  <br>
+/<textarea id="comment" name="comment" cols="60" rows="18" maxlength="65525" required="required">Quien llama:
+Reporta: intermitencias en los tres servicios
+ts realizado: niveles de potencia incorrecto - 27.00
+// se envia visita tecnica
+// se anexa evidencia
+// se soluciona: no / </textarea><br>
+/<br>
+/<br>
+/<a href="#regresar">Regresar</a> <br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/ <a name="Sin_linea_de_telefono"></a><br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <a href="#sin_linea_de_telefono">Sin linea de telefono</a><br>
+&nbsp;<br>
+/ <textarea id="comment" name="comment" cols="60" rows="18" maxlength="65525" required="required">//Quien llama:
+//Reporta: sin linea de telefono
+//ts realizado: se valida que tiene linea ociosa
+// se activa desde dashboard
+//
+//se soluciona: si
+/ </textarea><br>
+/<br>
+/<br>
+/<br>
+/<a href="#regresar">Regresar</a><br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/ <a name="Falla_general"></a><br>
+/<br>
+/<br>
+/<br>
+/Falla general<br>
+/<br>
+/<br>
+/<textarea id="comment" name="comment" cols="60" rows="18" maxlength="65525" required="required">Quien llama:
+Reporta: intermitencias en servicio
+ts realizado: es falla general se le pide tiempo de espera
+// se valida en incidencias
+//
+//
+se soluciona: no</textarea><br>
+/<br>
+/<br>
+/<br>
+/<a href="#regresar">Regresar</a><br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/ <a name="Amarre_incorrecto"></a><br>
+/<br>
+/<br>
+/<br>
+/Amarre incorrecto <br>
+/<br>
+/<br>
+  <table style="text-align: left; width: 889px;" border="1" cellpadding="2" cellspacing="2">
+    <tbody>
+      <tr>
+        <td style="vertical-align: top; width: 330px;"><textarea id="comment" name="comment" cols="75" rows="20" maxlength="65525" required="required">//
+//Amarre incorrecto
+//
+//Quien llama:
+//Reporta: intermitencias en la television
+//Mac:
+//ts realizado: se revisan conexiones // se desconecta y conecta cable
+de red del stb y ont sin éxito
+//se envia visita tecnica por amarre incorrecto
+// LAN : 100fd //
+//
+se soluciona: no</textarea></td>
+        <td style="vertical-align: top; width: 363px;"><textarea id="comment" name="comment" cols="75" rows="20" maxlength="65525" required="required">//
+// Falla en cable de red / en puerto del stb
+//
+//Quien llama:
+//Reporta: problema de conexion
+//Mac:
+//ts realizado: se revisan conexiones
+//se cambia de puerto en la ont
+// se desconecta y conecta cable de red del stb sin éxito
+//se envia vt / stb no se visualiza en tpro
+//
+//se intercambia el stb con otro se replica la falla en el mismo stb
+//se detecta falla en el puerto del stb
+//se envia vt
+//
+se soluciona: no</textarea></td>
+      </tr>
+    </tbody>
+  </table>
+/<br>
+/<br>
+/<br>
+/<br>
+/<a href="#regresar">Regresar</a> <br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+/<br>
+&nbsp;<br>
+  <big style="font-weight: bold; font-family: Arial;"><big><br>
+  </big></big>
+  <table style="text-align: left; width: 1151px; height: 33px;" border="1" cellpadding="2" cellspacing="2">
+    <tbody>
+      <tr>
+        <td style="height: 29px; vertical-align: top; width: 278px;"><br>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <big style="font-weight: bold; font-family: Arial;"><big><br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  </big></big><big style="font-weight: bold; font-family: Arial;"><big><br>
+  </big></big></form>
+</div>
+<div>
+</div>
+</div>
+<section id="contact" data-stellar-background-ratio="0.5">
+</section></div>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+</body></html>
