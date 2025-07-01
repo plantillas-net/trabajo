@@ -26,6 +26,13 @@
 
 
 
+
+
+
+
+
+
+
   
   <meta charset="UTF-8">
 
@@ -1137,7 +1144,1024 @@ body {
             cursor: pointer;
             text-align: center;
         }
-    </style></head><body>
+    </style><meta content="text/html; charset=ISO-8859-1" http-equiv="content-type"><meta charset="UTF-8"><style>
+body { font-family: sans-serif; padding: 20px; background: #f4f4f4; }
+input[type="text"], textarea {
+width: 100%; padding: 8px; margin-bottom: 10px;
+border-radius: 4px; border: 1px solid #ccc;
+}
+button {
+margin: 5px 10px 10px 0;
+padding: 8px 12px;
+border: none;
+background: #4caf50;
+color: white;
+border-radius: 4px;
+cursor: pointer;
+}
+button:hover { background: #45a049; }
+.item {
+background: #fff;
+padding: 10px;
+margin-bottom: 6px;
+border-radius: 4px;
+cursor: pointer;
+border: 1px solid rgba(0,0,0,0.1);
+white-space: pre-wrap;
+}
+.item:hover { background: #e3fbe3; }
+.match { background-color: #90ee90; }
+.resultado-area {
+background: #fff;
+padding: 12px;
+margin-top: 15px;
+border-radius: 6px;
+box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+.seccion-agregar {
+background: #eaeaea;
+padding: 15px;
+border-radius: 6px;
+margin-top: 40px;
+}
+</style><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><style>
+body {
+font-family: Arial,sans-serif;
+}
+.search-container {
+margin-top: 20px;
+}
+.result {
+padding: 5px;
+background-color: #f0f0f0;
+margin-top: 10px;
+}
+.hidden {
+display: none;
+}
+.highlight {
+background-color: #0000cd;
+}
+.highlight:hover {
+background-color: #e0e0e0;
+}
+#clear-button {
+margin-top: 20px;
+}
+.word-list {
+padding: 0;
+list-style-type: none;
+list-style-image: none;
+list-style-position: outside;
+}
+.word-list li {
+padding: 8px 12px;
+margin-bottom: 5px;
+background-color: #f0f0f0;
+}
+.word-list li:hover {
+background-color: #e0e0e0;
+}
+
+</style><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><style>
+body {
+font-family: Arial, sans-serif;
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+}
+.main-content {
+padding: 20px;
+margin-right: 358px; /* Espacio para el menú */
+}
+.menu {
+position: fixed;
+top: 0;
+right: 0;
+width: 103px;
+height: 100%;
+background-color: #333;
+color: white;
+padding: 10px;
+box-shadow: -2px 0 5px rgba(0,0,0,0.1);
+overflow-y: auto;
+}
+.menu a {
+display: block;
+color: white;
+padding: 8px;
+text-decoration: none;
+cursor: pointer;
+}
+.menu a:hover {
+background-color: #575757;
+}
+.content {
+display: none;
+margin-top: 20px;
+}
+.content.active {
+display: block;
+}
+.content textarea {
+width: 100%;
+height: 358px;
+}
+</style><meta charset="UTF-8"><style>
+.tabla-contenedor {
+display: flex;
+resize: both;
+overflow: auto;
+border: 1px solid #ddd;
+padding: 10px;
+margin: 20px;
+}
+table {
+border-collapse: collapse;
+width: 50%;
+}
+th, td {
+border: 1px solid #ddd;
+padding: 8px;
+text-align: left;
+}
+th {
+background-color: #f2f2f2;
+}
+.tabla-izquierda {
+margin-right: 20px;
+}
+</style><meta charset="UTF-8"><style>
+.tabla-contenedor {
+display: flex;
+resize: both;
+overflow: auto;
+border: 1px solid #ddd;
+padding: 10px;
+margin: 20px;
+}
+table {
+border-collapse: collapse;
+width: 50%;
+}
+th, td {
+border: 1px solid #ddd;
+padding: 8px;
+text-align: left;
+}
+th {
+background-color: #f2f2f2;
+}
+.tabla-izquierda {
+margin-right: 20px;
+}
+</style><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"><style>
+table {
+border-collapse: collapse;
+width: 50%; /* Tamaño inicial de la tabla */
+}
+th, td {
+border: 1px solid rgb(221, 218, 218);
+padding: 8px;
+text-align: left;
+}
+th {
+background-color: #f2f2f2;
+}
+</style><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><style>
+#result {
+margin-top: 20px;
+border: 1px solid #000;
+padding: 10px;
+width: 675px;
+height: 15px;
+overflow-y: auto;
+resize: both; /* Permitir redimensionamiento en ambas direcciones */
+}
+</style><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><style>
+.search-container {
+position: relative;
+margin-bottom: 20px;
+}
+
+.search-input {
+width: 300px;
+padding: 8px;
+font-size: 16px;
+}
+
+.results {
+border: 1px solid #ccc;
+max-height: 500px;
+overflow-y: auto;
+display: none;
+position: absolute;
+background: white;
+width: calc(100% - 22px); /* ajustar */
+z-index: 1000; /* para qe quede encima */
+}
+
+.results li {
+list-style: none;
+padding: 8px;
+cursor: pointer;
+}
+
+.results li:hover {
+background-color: #f0f0f0;
+}
+
+.highlight {
+background-color: rgb(226, 217, 217);
+}
+</style><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><style>
+#result {
+border: 1px solid #ccc;
+padding: 10px;
+width: 100%;
+height: 200px;
+overflow-y: scroll;
+white-space: pre-wrap;
+}
+button {
+margin: 10px;
+}
+</style><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><style>
+
+#issue-list {
+display: none;
+margin-top: 10px;
+border: 1px solid #ddd;
+max-height: 150px;
+overflow-y: auto;
+}
+
+#issue-list li {
+list-style: none;
+padding: 5px;
+cursor: pointer;
+}
+
+#issue-list li:hover {
+background-color: #ddd;
+}
+
+#text-box {
+display: none;
+margin-top: 10px;
+}
+
+#delete-button {
+margin-top: 10px;
+display: none;
+}
+</style><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><style>
+#result {
+border: 1px solid #ccc;
+padding: 10px;
+width: 100%;
+height: 200px;
+overflow-y: scroll;
+white-space: pre-wrap;
+}
+button {
+margin: 10px;
+}
+</style><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><style>
+body {
+font-family: Arial, sans-serif;
+margin: 20px;
+}
+#textContainer {
+width: 238px;
+height: 447px;
+border: 1px solid #ccc;
+padding: 10px;
+overflow-y: auto;
+margin-bottom: 20px;
+box-sizing: border-box;
+}
+button {
+padding: 10px;
+margin-right: 10px;
+cursor: pointer;
+}
+</style><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><style>
+body {
+font-family: Arial, sans-serif;
+margin: 20px;
+}
+#textContainer {
+border: 1px solid #ccc;
+padding: 10px;
+min-height: 200px;
+margin-bottom: 20px;
+}
+button {
+padding: 10px;
+margin-right: 10px;
+cursor: pointer;
+}
+</style><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><style>
+body {
+font-family: Arial, sans-serif;
+margin: 20px;
+}
+#textContainer {
+border: 1px solid #ccc;
+padding: 10px;
+min-height: 200px;
+margin-bottom: 20px;
+}
+button {
+padding: 10px;
+margin-right: 10px;
+cursor: pointer;
+}
+</style><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><style>
+body {
+font-family: Arial, sans-serif;
+margin: 20px;
+}
+#textContainer {
+width: 350px;
+height: 238px;
+border: 1px solid #ccc;
+padding: 10px;
+overflow-y: auto;
+margin-top: 20px;
+box-sizing: border-box;
+}
+button {
+padding: 10px;
+margin-right: 10px;
+cursor: pointer;
+}
+</style><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><style>
+body {
+font-family: Arial, sans-serif;
+margin: 20px;
+}
+#textContainer {
+width: 350px;
+height: 238px;
+border: 1px solid #ccc;
+padding: 10px;
+overflow-y: auto;
+margin-top: 20px;
+box-sizing: border-box;
+}
+button {
+padding: 10px;
+margin-right: 10px;
+cursor: pointer;
+}
+</style><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><style>
+body {
+font-family: Arial, sans-serif;
+margin: 20px;
+}
+#textContainer {
+width: 350px;
+height: 238px;
+border: 1px solid #ccc;
+padding: 10px;
+overflow-y: auto;
+margin-top: 20px;
+box-sizing: border-box;
+}
+button {
+padding: 10px;
+margin-right: 10px;
+cursor: pointer;
+} </style><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><style>
+body {
+font-family: Arial, sans-serif;
+text-align: center;
+margin: 20px;
+}
+button {
+font-size: 16px;
+padding: 2px 3px;
+margin: 1px;
+}
+textarea {
+width: 100%;
+height: 300px;
+font-size: 16px;
+padding: 10px;
+margin-top: 20px;
+resize: both; /* ajustar el tamaño del cuadro */
+text-align: auto; /* Texto alineado */
+}
+</style><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><style>
+body {
+font-family: Arial, sans-serif;
+margin: 20px;
+}
+input[type="text"] {
+width: 45%;
+padding: 10px;
+margin-bottom: 10px;
+font-size: 16px;
+}
+ul {
+list-style-type: none;
+padding: 0;
+display: none; /* Oculta la lista v */
+margin-top: 10px;
+}
+li {
+padding: 8px;
+background-color: #f0f0f0;
+margin-bottom: 5px;
+cursor: pointer;
+border-radius: 5px;
+}
+li:hover {
+background-color: #cce7ff;
+}
+textarea {
+width: 100%;
+height: 200px;
+margin-top: 10px;
+font-size: 16px;
+padding: 10px;
+border-radius: 5px;
+border: 1px solid #ccc;
+white-space: pre-wrap; /* Mantiene los saltos de línea no borrar s se elimina repetir comando */
+}
+button {
+margin-top: 10px;
+padding: 10px 20px;
+font-size: 16px;
+cursor: pointer;
+border: none;
+border-radius: 5px;
+background-color: #007bff;
+color: white;
+}
+button:hover {
+background-color: #0056b3;
+}
+</style><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><style>
+#reloj {
+font-family: 'Arial', sans-serif;
+color: #333;
+font-size: 24px;
+text-align: center;
+padding: 20px;
+margin-top: 20px;
+border: 2px solid #333;
+display: inline-block;
+border-radius: 10px;
+background-color: #f9f9f9;
+}
+</style><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><style>
+#reloj {
+font-family: 'Arial', sans-serif;
+color: #333;
+font-size: 24px;
+text-align: center;
+padding: 20px;
+margin-top: 20px;
+border: 2px solid #333;
+display: inline-block;
+border-radius: 10px;
+background-color: #f9f9f9;
+}
+</style><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><style>
+#reloj {
+font-family: 'Arial', sans-serif;
+color: #333;
+font-size: 24px;
+text-align: center;
+padding: 20px;
+margin-top: 20px;
+border: 2px solid #333;
+display: inline-block;
+border-radius: 10px;
+background-color: #f9f9f9;
+}</style><style>
+.search-section {
+margin-left: 20px; /* Margen a la izquierda */
+margin-bottom: 40px; /* Espacio entre los buscadores */
+}
+
+#search-results-1, #search-results-2 {
+margin-top: 10px;
+cursor: pointer;
+display: none; /* Oculta la lista por defecto */
+}
+
+.result-item {
+margin: 5px 0;
+padding: 5px;
+border: 1px solid #ccc;
+background-color: #f9f9f9;
+}
+
+.result-item:hover {
+background-color: #e0e0e0;
+}
+
+button {
+margin-top: 10px;
+padding: 5px 10px;
+}</style><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><style>
+.search-section {
+margin-left: 20px;
+margin-bottom: 40px;
+}
+
+#search-results-1, #search-results-2 {
+margin-top: 10px;
+cursor: pointer;
+display: none;
+}
+
+.result-item {
+margin: 5px 0;
+padding: 5px;
+border: 1px solid #ccc;
+background-color: #f9f9f9;
+}
+
+.result-item:hover {
+background-color: #e0e0e0;
+}
+
+button {
+margin-top: 10px;
+padding: 5px 10px;
+}
+</style><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><style>
+#search-results {
+margin-top: 10px;
+cursor: pointer;
+display: none; /* Oculta la lista por defecto */
+}
+.result-item {
+margin: 5px 0;
+padding: 5px;
+border: 1px solid #ccc;
+background-color: #f9f9f9;
+}
+.result-item:hover {
+background-color: #e0e0e0;
+}
+button {
+margin-top: 10px;
+padding: 5px 10px; </style><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><style>
+#search-results {
+margin-top: 10px;
+cursor: pointer;
+display: none; /* Oculta la lista por defecto */
+}
+.result-item {
+margin: 5px 0;
+padding: 5px;
+border: 1px solid #ccc;
+background-color: #f9f9f9;
+}
+.result-item:hover {
+background-color: #e0e0e0;
+}
+button {
+margin-top: 10px;
+padding: 5px 10px;
+}
+</style><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><style>
+#search-results {
+margin-top: 10px;
+cursor: pointer;
+display: none; /* Oculta la lista por defecto */
+}
+.result-item {
+margin: 5px 0;
+padding: 5px;
+border: 1px solid #ccc;
+background-color: #f9f9f9;
+}
+.result-item:hover {
+background-color: #e0e0e0;
+}
+button {
+margin-top: 10px;
+padding: 5px 10px;
+}
+</style><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><style>
+.container {
+display: flex;
+flex-direction: column;
+align-items: center;
+margin-top: 20px;
+}
+button {
+margin: 5px;
+}
+</style><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><style>
+#search-results {
+margin-top: 10px;
+cursor: pointer;
+display: none; /* Oculta la lista por defecto */
+}
+.result-item {
+margin: 5px 0;
+padding: 5px;
+border: 1px solid #ccc;
+background-color: #f9f9f9;
+}
+.result-item:hover {
+background-color: #e0e0e0;
+}
+button {
+margin-top: 10px;
+padding: 5px 10px;
+}
+</style><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><style>
+#search-results {
+margin-top: 10px;
+cursor: pointer;
+display: none; /* Oculta la lista por defecto */
+}
+.result-item {
+margin: 5px 0;
+padding: 5px;
+border: 1px solid #ccc;
+background-color: #f9f9f9;
+}
+.result-item:hover {
+background-color: #e0e0e0;
+}
+button {
+margin-top: 10px;
+padding: 5px 10px;
+}
+</style><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><style>
+body {
+font-family: Arial, sans-serif;
+margin: 20px;
+}
+#searchResults {
+margin-bottom: 20px;
+}
+.resultado {
+padding: 10px;
+margin-bottom: 5px;
+border: 1px solid #ccc;
+background-color: #f9f9f9;
+cursor: pointer;
+}
+.resultado:hover {
+background-color: #e9e9e9;
+}
+#detalle {
+margin-bottom: 20px;
+}
+#detalle textarea {
+width: 100%;
+height: 80px;
+}
+#clearButton {
+margin-top: 10px;
+}
+#searchResults {
+display: none;
+}
+</style><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><style>
+body {
+font-family: Arial, sans-serif;
+margin: 20px;
+}
+#searchResults {
+margin-bottom: 20px;
+}
+.resultado {
+padding: 10px;
+margin-bottom: 5px;
+border: 1px solid #ccc;
+background-color: #f9f9f9;
+cursor: pointer;
+}
+.resultado:hover {
+background-color: #e9e9e9;
+}
+#detalle {
+margin-bottom: 20px;
+}
+#detalle textarea {
+width: 30%;
+height: 200px;
+}
+#clearButton {
+margin-top: 10px;
+}
+#searchResults {
+display: none;
+}
+</style><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><style>
+body {
+font-family: Arial, sans-serif;
+margin: 20px;
+}
+textarea {
+width: 100%;
+height: 200px;
+resize: both; /* redimensionar */
+padding: 10px;
+box-sizing: border-box;
+font-size: 16px;
+}
+button {
+margin-top: 10px;
+padding: 10px 20px;
+font-size: 16px;
+cursor: pointer;
+}
+</style><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><style>
+body {
+font-family: Arial, sans-serif;
+margin: 20px;
+}
+textarea {
+width: 100%;
+height: 200px;
+resize: both; /* Permite redimensionar el cuadro */
+padding: 10px;
+box-sizing: border-box;
+font-size: 16px;
+}
+button {
+margin-top: 10px;
+padding: 10px 20px;
+font-size: 16px;
+cursor: pointer;
+}
+</style><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><style>
+body {
+font-family: Arial, sans-serif;
+margin: 20px;
+}
+#searchResults {
+margin-bottom: 20px;
+}
+.resultado {
+padding: 10px;
+margin-bottom: 5px;
+border: 1px solid #ccc;
+background-color: #f9f9f9;
+cursor: pointer;
+}
+.resultado:hover {
+background-color: #e9e9e9;
+}
+#detalle {
+margin-bottom: 20px;
+}
+#detalle textarea {
+width: 100%;
+height: 80px;
+}
+#clearButton {
+margin-top: 10px;
+}
+#searchResults {
+display: none;
+}
+#deleteReportsButton {
+background-color: #ff4d4d;
+color: white;
+padding: 10px;
+border: none;
+cursor: pointer;
+margin-top: 20px;
+}
+#deleteReportsButton:hover {
+background-color: #ff1a1a;
+}
+</style><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><style>
+body {
+font-family: Arial, sans-serif;
+margin: 20px;
+}
+textarea {
+width: 100%;
+height: 150px;
+padding: 10px;
+font-size: 16px;
+margin-bottom: 10px;
+}
+button {
+display: block;
+margin: 10px 0;
+padding: 10px;
+font-size: 14px;
+cursor: pointer;
+color: white;
+border: none;
+border-radius: 5px;
+text-align: left;
+}
+/* Colores específicos para los primeros botones */
+.btn-green { background-color: #4CAF50; }
+.btn-red { background-color: #f44336; }
+.btn-orange { background-color: #ff9800; }
+.btn-gray { background-color: #9e9e9e; }
+/* Color azul claro para el resto */
+.btn-blue { background-color: #87CEFA; color: black; }
+button:hover {
+opacity: 0.9;
+}
+</style><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><style>
+body {
+font-family: Arial, sans-serif;
+margin: 20px;
+}
+textarea {
+width: 100%;
+height: 200px;
+resize: both; /* Permite redimensionar el cuadro */
+padding: 10px;
+box-sizing: border-box;
+font-size: 16px;
+}
+button {
+margin-top: 10px;
+padding: 10px 20px;
+font-size: 16px;
+cursor: pointer;
+}
+</style><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><style>
+body {
+font-family: Arial, sans-serif;
+text-align: center;
+margin: 20px;
+}
+button {
+font-size: 16px;
+padding: 10px 20px;
+margin: 10px;
+}
+textarea {
+width: 100%;
+height: 300px;
+font-size: 16px;
+padding: 10px;
+margin-top: 20px;
+resize: both;
+}
+</style><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><style>
+/* Estilo para que los botones se muestren en una línea */
+.botones {
+display: flex;
+flex-wrap: wrap;
+gap: 10px;
+}
+.boton {
+padding: 10px 20px;
+font-size: 16px;
+cursor: pointer;
+background-color: #4CAF50;
+color: white;
+border: none;
+border-radius: 5px;
+text-align: center;
+text-decoration: none;
+}
+.boton:hover {
+background-color: #45a049;
+}
+</style><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><style>
+body {
+font-family: Arial, sans-serif;
+margin: 10;
+height: 100vh;
+position: relative;
+}
+
+/* Zona sensible en la esquina superior derecha */
+.zona-sensible {
+position: fixed;
+top: 0;
+right: 10;
+width: 100px;
+height: 50px;
+background: transparent;
+z-index: 10;
+}
+
+/* Cuadro con el iframe */
+.cuadro {
+position: fixed;
+top: 10px;
+right: 10px;
+width: 400px;
+height: 300px;
+background: white;
+border: 2px solid black;
+box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+display: none;
+padding: 10px;
+}
+
+iframe {
+width: 100%;
+height: 90%;
+border: none;
+}
+
+.cerrar {
+display: block;
+width: 100%;
+padding: 5px;
+background: red;
+color: white;
+border: none;
+cursor: pointer;
+text-align: center;
+}
+</style><meta charset="UTF-8"><style>
+body {
+font-family: sans-serif;
+padding: 2rem;
+background: #f4f4f4;
+}
+button {
+padding: 1rem;
+margin-bottom: 1rem;
+font-size: 1rem;
+cursor: pointer;
+}
+#container {
+background: #fff;
+padding: 1rem;
+border-radius: 6px;
+width: 80%; /* &#128295; Cambia el ancho aquí (ej. 100% o 600px) */
+height: 400px; /* &#128295; Cambia la altura aquí (ej. 300px o auto) */
+overflow-y: auto;
+resize: both; /* Permite redimensionar desde el navegador */
+border: 1px solid #ccc;
+}
+.line {
+border-bottom: 1px solid #eee;
+padding: 0.5rem 0;
+outline: none;
+} </style><meta charset="UTF-8"><style>
+body {
+font-family: sans-serif;
+padding: 2rem;
+background: #f4f4f4;
+}
+button {
+padding: 1rem;
+margin-bottom: 1rem;
+font-size: 1rem;
+cursor: pointer;
+}
+#container {
+background: #fff;
+padding: 1rem;
+border-radius: 6px;
+width: 80%; /* &#128295; Cambia el ancho aquí (ej. 100% o 600px) */
+height: 400px; /* &#128295; Cambia la altura aquí (ej. 300px o auto) */
+overflow-y: auto;
+resize: both; /* Permite redimensionar desde el navegador */
+border: 1px solid #ccc;
+}
+.line {
+border-bottom: 1px solid #eee;
+padding: 0.5rem 0;
+outline: none;
+}
+</style><meta charset="UTF-8"><style>
+    body {
+      font-family: sans-serif;
+      padding: 2rem;
+      background: #f4f4f4;
+    }
+    button {
+      padding: 1rem;
+      margin-bottom: 1rem;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    #container {
+      background: #fff;
+      padding: 1rem;
+      border-radius: 6px;
+      width: 80%;          /* 🔧 Cambia el ancho aquí (ej. 100% o 600px) */
+      height: 400px;        /* 🔧 Cambia la altura aquí (ej. 300px o auto) */
+      overflow-y: auto;
+      resize: both;         /* Permite redimensionar desde el navegador */
+      border: 1px solid #ccc;
+    }
+    .line {
+      border-bottom: 1px solid #eee;
+      padding: 0.5rem 0;
+      outline: none;
+    }
+  </style></head><body>
 
 
 
@@ -1150,134 +2174,23 @@ body {
     
     
 <div style="text-align: left;">
-<div style="text-align: left; width: 100%;">
 
 
 
     
-    
-    
-    
+<br>
 
-    
-    
-    <input id="search-input" placeholder="Buscar frase..." style="width: 100%;" type="text">
-</div>
-<div id="search-results" style="display: none;"></div>
-
-    
-<div style="position: absolute; left: 32px; top: 5257px; width: 754px;"><input id="new-phrase" placeholder="Agregar script " type="text">
-    <button onclick="addPhrases()">Agregar </button>
-    <button onclick="clearPhrases()">Borrar </button>
-<script>
-        // Cargar frases desde localStorage
-        let phrases = JSON.parse(localStorage.getItem('phrases')) || [];
-
-        // Función para buscar frases
-        function searchPhrase() {
-            const query = document.getElementById('search-input').value.toLowerCase();
-            const results = phrases.filter(phrase => phrase.toLowerCase().includes(query));
-            
-            displayResults(results);
-        }
-
-        // Mostrar resultados de búsqueda
-        function displayResults(results) {
-            const resultsContainer = document.getElementById('search-results');
-            resultsContainer.innerHTML = '';
-
-            if (results.length > 0 && document.getElementById('search-input').value !== "") {
-                results.forEach(result => {
-                    const div = document.createElement('div');
-                    div.className = 'result-item';
-                    div.textContent = result;
-                    div.onclick = function() {
-                        copyToClipboard(result);
-                    };
-                    resultsContainer.appendChild(div);
-                });
-                resultsContainer.style.display = 'block'; // Mostrar la lista solo si hay resultados
-            } else {
-                resultsContainer.style.display = 'none'; // Ocultar la lista si no hay resultados
-            }
-        }
-
-        // Agregar nuevas frases
-        function addPhrases() {
-            const newPhrases = document.getElementById('new-phrase').value.trim();
-            if (newPhrases) {
-                const phrasesArray = newPhrases.split('-').map(phrase => phrase.trim()).filter(phrase => phrase !== '');
-                phrases = [...phrases, ...phrasesArray];
-                localStorage.setItem('phrases', JSON.stringify(phrases));
-                document.getElementById('new-phrase').value = '';
-                searchPhrase(); // Actualizar la búsqueda
-            }
-        }
-
-        // Borrar todas las frases
-        function clearPhrases() {
-            phrases = [];
-            localStorage.setItem('phrases', JSON.stringify(phrases));
-            searchPhrase(); // Limpiar resultados
-        }
-
-        // Copiar al portapapeles
-        function copyToClipboard(text) {
-            const tempInput = document.createElement('input');
-            tempInput.value = text;
-            document.body.appendChild(tempInput);
-            tempInput.select();
-            document.execCommand('copy');
-            document.body.removeChild(tempInput);
-            document.getElementById('search-results').style.display = 'none'; // Ocultar la lista después de copiar
-            document.getElementById('search-input').value = ''; // Limpiar el campo de búsqueda
-        }
-
-        //   para buscar mientras se escribe
-        document.getElementById('search-input').addEventListener('input', searchPhrase);
-
-        //   la búsqueda al cargar la página
-        searchPhrase();
-    </script></div>
 
 
     
 
 
 
-</div>
-<div style="text-align: left;">
-<script>
-        // JavaScript 
-        function guardarNombre() {
-            var nombre = document.getElementById("nombre").value;
-            localStorage.setItem("nombreUsuario", nombre);
-            actualizarDialogos();
-        }
-
-        function actualizarDialogos() {
-            var nombreGuardado = localStorage.getItem("nombreUsuario");
-            if (nombreGuardado) {
-                document.getElementById("dialogo1").textContent = "¡Hola! Buen día soy " + nombreGuardado + " de soporte técnico de Totalplay, para poderle ayudar me confirma su número de cuenta, nombre por favor y ¿En qué le puedo ayudar?";
-                document.getElementById("dialogo2").textContent = "Te invito a contestar una breve encuesta la cual está enfocada a evaluar la atención que te brinde en esta interacción. ☼ Tu opinión es muy importante para nosotros.  Muchas gracias por tu apoyo !!     Gracias por contactarnos le atendió " + nombreGuardado + " de soporte técnico de Totalplay buena tarde";
-                document.getElementById("dialogo3").textContent = "Gracias por contactarnos le atendió " + nombreGuardado + " de soporte técnico de Totalplay buena tarde";
-                document.getElementById("dialogo4").textContent = "De antemano te ofrezco una disculpa, no nos es posible permanecer más tiempo en línea sin respuesta por parte del cliente, pero recuerda que estamos para ayudarte; puedes contactarnos en cualquier momento para darte asistencia. Te atendió " + nombreGuardado + " de Soporte Técnico Totalplay ¡Que tengas un excelente dia!";
-            }
-        }
-
-        function cargarNombre() {
-            actualizarDialogos();
-        }
-    </script>
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script> <br>
-</div>
-
-<table style="text-align: left; height: 593px; width: 1034px;" border="1" cellpadding="2" cellspacing="2">
+</div><table style="text-align: left; width: 1034px; height: 515px;" border="1" cellpadding="2" cellspacing="2">
 
   <tbody>
     <tr>
-      <td style="vertical-align: top; width: 423px; height: 556px;"> <ul id="reportList">
+      <td style="vertical-align: top; width: 423px; height: 516px;"> <ul id="reportList">
 <!-- reportes  aquí -->
       </ul>
 
@@ -1318,185 +2231,413 @@ body {
 
     
 
-    <input id="searchInput" placeholder="Buscar tipo de falla..." onkeyup="buscarReporte()" type="text">
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table style="text-align: left; margin-left: 0px; width: 526px; height: 465px;" border="1" cellpadding="2" cellspacing="2">
+<tbody>
+<tr style="margin-left: 0px; height: 318px; width: 866px;">
+<td style="vertical-align: top; width: 509px; height: 310px;"> 
+            <div style="position: absolute; left: 18px; top: 2px; width: 510px;"><input placeholder="Buscar en lista 1..." id="buscador1" oninput="buscarLista1()" style="padding-right: 10px; width: 1022.22px;" type="text"></div>
+
+<div id="resultados1"></div>
+<input placeholder="Buscar plantilla..." id="buscador2" oninput="buscarPlantillas()" type="text">
+<div id="resultados2" style="display: block;"></div>
+<div class="resultado-area" id="detalle" style="display: none;">
+<h3 id="tituloPlantilla"></h3>
+<textarea id="plantillaEditable" rows="6" oninput="guardarEdicion()"></textarea><br>
+<button onclick="restaurar()">Restaurar plantilla original</button>
+</div>
+<div style="position: absolute; left: 5px; top: 4880px;" class="seccion-agregar">
+<h3>Agregar Contenido</h3>
+<label for="entrada1">Lista 1 (separa con +):</label> <textarea id="entrada1" rows="3"></textarea> <button onclick="agregarLista1()">Agregar
+1</button> <button onclick="borrarLista1()">Borrar 1</button> <br>
+<br>
+<label for="entrada2">Plantillas (formato: Título_Plantilla):</label>
+<textarea id="entrada2" rows="5"></textarea> <button onclick="agregarPlantillas()">Agregar 2</button> <button onclick="borrarPlantillas()">Borrar 2</button>
+<script>
+let plantillas = [];
+let originales = [];
+let actualIndex = -1;
+
+function normalizar(txt) {
+return txt.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+}
+
+// === BUSCADOR 1 ===
+function obtenerLista1() {
+return JSON.parse(localStorage.getItem("lista1") || "[]");
+}
+function guardarLista1(arr) {
+localStorage.setItem("lista1", JSON.stringify(arr));
+}
+function agregarLista1() {
+const entrada = document.getElementById("entrada1").value;
+const nuevos = entrada.split("+").map(t => t.trim()).filter(Boolean);
+const actuales = obtenerLista1();
+guardarLista1(actuales.concat(nuevos));
+document.getElementById("entrada1").value = "";
+buscarLista1();
+}
+function borrarLista1() {
+localStorage.removeItem("lista1");
+document.getElementById("buscador1").value = "";
+document.getElementById("resultados1").innerHTML = "";
+}
+function buscarLista1() {
+const query = normalizar(document.getElementById("buscador1").value);
+const datos = obtenerLista1();
+const cont = document.getElementById("resultados1");
+cont.innerHTML = "";
+if (!query) return;
+datos.forEach(t => {
+const norm = normalizar(t);
+if (norm.includes(query)) {
+const marcado = t.replace(new RegExp(query, "gi"), m => `<span class="match">${m}</span>`);
+const div = document.createElement("div");
+div.className = "item";
+div.innerHTML = marcado;
+div.onclick = () => {
+navigator.clipboard.writeText(t);
+cont.innerHTML = "";
+document.getElementById("buscador1").value = "";
+};
+cont.appendChild(div);
+}
+});
+}
+
+// === BUSCADOR 2 ===
+function cargarPlantillas() {
+plantillas = JSON.parse(localStorage.getItem("plantillas_titulos") || "[]");
+originales = JSON.parse(localStorage.getItem("plantillas_originales") || "[]");
+}
+function guardarPlantillas() {
+localStorage.setItem("plantillas_titulos", JSON.stringify(plantillas));
+localStorage.setItem("plantillas_originales", JSON.stringify(originales));
+}
+function agregarPlantillas() {
+const entrada = document.getElementById("entrada2").value;
+const nuevos = entrada.split("+").map(t => t.trim()).filter(Boolean);
+nuevos.forEach(t => {
+const partes = t.split("_");
+if (partes.length >= 2) {
+const titulo = partes[0].trim();
+const cuerpo = partes.slice(1).join("_").trim();
+plantillas.push([titulo, cuerpo]);
+originales.push([titulo, cuerpo]);
+}
+});
+guardarPlantillas();
+document.getElementById("entrada2").value = "";
+buscarPlantillas();
+}
+function borrarPlantillas() {
+localStorage.removeItem("plantillas_titulos");
+localStorage.removeItem("plantillas_originales");
+plantillas = [];
+originales = [];
+buscarPlantillas();
+cerrarDetalle();
+}
+function buscarPlantillas() {
+const query = normalizar(document.getElementById("buscador2").value);
+const cont = document.getElementById("resultados2");
+cont.innerHTML = "";
+cont.style.display = "block";
+if (!query) return;
+plantillas.forEach((p, i) => {
+const titulo = p[0], cuerpo = p[1];
+const normalizado = normalizar(titulo + " " + cuerpo);
+if (normalizado.includes(query)) {
+const marcado = titulo.replace(new RegExp(query, "gi"), m => `<span class="match">${m}</span>`);
+const item = document.createElement("div");
+item.className = "item";
+item.innerHTML = marcado;
+item.onclick = () => mostrarDetalle(i);
+cont.appendChild(item);
+}
+});
+}
+function mostrarDetalle(i) {
+actualIndex = i;
+document.getElementById("tituloPlantilla").innerText = plantillas[i][0];
+document.getElementById("plantillaEditable").value = plantillas[i][1];
+document.getElementById("detalle").style.display = "block";
+document.getElementById("resultados2").style.display = "none";
+}
+function guardarEdicion() {
+if (actualIndex >= 0) {
+plantillas[actualIndex][1] = document.getElementById("plantillaEditable").value;
+guardarPlantillas();
+}
+}
+function restaurar() {
+if (actualIndex >= 0) {
+plantillas[actualIndex][1] = originales[actualIndex][1];
+document.getElementById("plantillaEditable").value = originales[actualIndex][1];
+guardarPlantillas();
+}
+}
+function cerrarDetalle() {
+document.getElementById("detalle").style.display = "none";
+document.getElementById("resultados2").style.display = "block";
+actualIndex = -1;
+}
+document.addEventListener("input", function (e) {
+if (e.target.id === "plantillaEditable") {
+guardarEdicion();
+}
+});
+window.addEventListener("beforeunload", function (e) {
+if (actualIndex !== -1) {
+e.preventDefault();
+e.returnValue = "Tienes una plantilla abierta. ¿Seguro que quieres salir?";
+}
+});
+window.onload = () => {
+cargarPlantillas();
+buscarLista1();
+};
+</script></div>
+</td>
+</tr>
+<tr>
+<td style="vertical-align: top; width: 509px; height: 148px;"> 
+
+
+  
+  
+  
+
+
+  <button onclick="toggleRecognition()">🎙️ Iniciar / Reiniciar Dictado</button>
+  <div id="container" style="width: 400px; height: 100px;"></div>
+
+  <script>
+    const container = document.getElementById('container');
+    let recognition;
+    let isListening = false;
+    let lastTimeout;
+
+    window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    recognition = new SpeechRecognition();
+    recognition.lang = 'es-MX'; // Puedes ajustar a tu preferencia
+    recognition.continuous = true;
+    recognition.interimResults = true;
+
+    let currentText = '';
+
+    recognition.onresult = (event) => {
+      clearTimeout(lastTimeout);
+      let interim = '';
+      for (let i = event.resultIndex; i < event.results.length; ++i) {
+        let transcript = event.results[i][0].transcript.trim();
+
+        if (event.results[i].isFinal) {
+          transcript = fixPunctuation(transcript);
+          addEditableLine(transcript);
+          currentText = '';
+        } else {
+          interim += transcript + ' ';
+          currentText = interim;
+        }
+      }
+
+      lastTimeout = setTimeout(() => {
+        if (currentText.trim() !== '') {
+          let softText = fixPunctuation(currentText.trim());
+          addEditableLine(softText + '...');
+          currentText = '';
+        }
+      }, 2500);
+    };
+
+    recognition.onerror = (event) => {
+      console.error('Error:', event.error);
+    };
+
+    function toggleRecognition() {
+      if (isListening) {
+        recognition.stop();
+        isListening = false;
+      }
+      container.innerHTML = ''; // Limpiar texto anterior
+      recognition.start();
+      isListening = true;
+    }
+
+    function addEditableLine(text) {
+      const div = document.createElement('div');
+      div.className = 'line';
+      div.contentEditable = true;
+      div.textContent = text;
+      container.insertBefore(div, container.firstChild);
+    }
+
+    function fixPunctuation(text) {
+      text = text.charAt(0).toUpperCase() + text.slice(1);
+      const keywords = ['qué', 'cuál', 'quién', 'cuándo', 'dónde', 'cómo', 'por qué'];
+      const lower = text.toLowerCase();
+      const isQuestion = keywords.some(k => lower.includes(k)) && !text.includes('?');
+
+      if (isQuestion) {
+        text = text.replace(/[.?!¡¿]*$/, ''); // Limpia signos anteriores
+        text = '¿' + text + '?';
+      } else if (!/[.?!¡¿]$/.test(text)) {
+        text += '.';
+      }
+
+      return text;
+    }
+  </script>
+
+</td>
+</tr>
+</tbody>
+</table>
+
+
     <div id="searchResults" style="display: none;"><div class="resultado">AAAAAAAAAAA</div><div class="resultado">CODIFICACION GENERAL</div><div class="resultado">INTERNET ONT SOLUCION EN LINEA</div><div class="resultado">REINICIA TODO EL TIEMPO</div><div class="resultado">INTERNET ONT  PARA ESCALAR</div><div class="resultado">NO NAVEGA ONT PARA ESCALAR</div><div class="resultado">CORTE DE FIBRA INVIDUAL CFO</div><div class="resultado">PON PARPADEA</div><div class="resultado">NIVELES DE POTENCIA INCORRECTO</div><div class="resultado">CORTE MASIVO</div><div class="resultado">FALLA GENERAL</div><div class="resultado">CAMBIO DE UBICACION</div><div class="resultado">LINEA OCIOSA</div><div class="resultado">SIN LINEA / FALLA EN PUERTO VISITA TECNICA</div><div class="resultado">TV SIN SEÑAL</div><div class="resultado">PROBLEMA DE CONEXION / FALLA EN CABLE DE RED STB</div><div class="resultado">PANTALLA NEGRA SIN AUDIO  MULTICAST ( SOLUCION EN LINEA )</div><div class="resultado">PANTALLA NEGRA SIN DIRECCIONAMIENTO ( SOLUCION EN LINEA )</div><div class="resultado">VENTA DE CONTROL REMOTO</div><div class="resultado">NO ENCIENDE ONT</div><div class="resultado">NO ENCIENDE STB</div><div class="resultado">APP TOTALPLAY</div><div class="resultado">REGISTRAR UN STB IPTV</div><div class="resultado">CAMBIAR NIP, GENERAR PERFIL EN IPTV</div><div class="resultado">CAMBIO DE ESTATUS DESENRUTAR IPTV</div><div class="resultado">CAMBIO DE REGION IPTV</div><div class="resultado">CARGAR PARRILLA O ALGUN ADICIONAL IPTV</div><div class="resultado">CONTROL REMOTO NO ENTREGADO</div><div class="resultado">CIERRE DE FOLIOS ( VISITA TECNICA)</div><div class="resultado">FOLIO NO ATENDIDO</div><div class="resultado">OS NO INICIADA / INCUMPLIMIENTO</div><div class="resultado">SIN DISPONIBILIDAD</div><div class="resultado">SOLICITUD DE CANCELACIÓN DE FOLIO (APOYO A N1)</div><div class="resultado">INTERNET CHECKLIST WIFI</div><div class="resultado">CLUB WIFI</div><div class="resultado">INTERNET CHECKLIST POR CABLE</div><div class="resultado">TELEVISION SOLUCIÓN EN LÍNEA</div><div class="resultado">TELEVISION ESCALACION GENERAL</div><div class="resultado">APLICACIONES NETFLIX, YOUTUBE, MAX, APPLE TV, PARAMOUNT, UNIVERSAL, ETC.</div><div class="resultado">VOD</div><div class="resultado">APLICACIONES DISNEY, STAR, COMBO / SIN BANNER DE AMAZON Y SIN BANNER DE NETFLIX</div><div class="resultado">ANYTIME</div><div class="resultado">SE SALTA LOS CANALES / SIN AUDIO EN ALGUNOS CANALES</div><div class="resultado">TELEFONÍA</div><div class="resultado">LLAMADAS CORTADAS</div><div class="resultado">STB SE REINICIA TODO EL TIEMPO</div><div class="resultado">SIN AUDIO EN NINGUN CANAL , CANALES SIN AUDIO</div><div class="resultado">AMARRE STB INCORRECTO</div><div class="resultado">FALLA EN PUERTO STB SIN SEÑAL VISITA</div><div class="resultado">INTERNET LENTO WIFI  EJEMPLO PARA ESCALAR</div><div class="resultado">INCONSISTENCIA INTERNET MEGAS</div></div>
     
-    <div id="detalle">
-        <textarea id="reportContent" readonly="readonly" style="height: 342px; width: 469px;"></textarea>
-        <button id="clearButton" onclick="borrarContenido()">Borrar contenido editado</button>
-    </div>
-
-    
-    
-      <div style="position: absolute; left: 40px; top: 5521px; width: 469px;"><textarea id="nuevosReportesInput" placeholder=" Reportar falla_ Plantilla + "></textarea><button onclick="agregarReportes()">Agregar</button> 
-
-    <button id="deleteReportsButton" onclick="borrarTodosLosReportes()">Borrar Reportes</button></div>
-
     
 
-    <script>
-        // Cargar reportes   localStorage  
-        let reportes = JSON.parse(localStorage.getItem('reportes')) || {};
-
-        let contenidoEditado = JSON.parse(localStorage.getItem('contenidoEditado')) || {};
-
-        document.addEventListener('DOMContentLoaded', () => {
-            mostrarResultados('');
-            cargarDetalle();
-        });
-
-        function mostrarResultados(query) {
-            const searchResults = document.getElementById('searchResults');
-            searchResults.innerHTML = '';
-
-            for (const tipoFalla in reportes) {
-                if (tipoFalla.toLowerCase().includes(query.toLowerCase())) {
-                    const div = document.createElement('div');
-                    div.className = 'resultado';
-                    div.textContent = tipoFalla;
-                    div.onclick = () => mostrarDetalle(tipoFalla);
-                    searchResults.appendChild(div);
-                }
-            }
-
-            searchResults.style.display = query ? 'block' : 'none';
-        }
-
-        function buscarReporte() {
-            const query = document.getElementById('searchInput').value;
-            mostrarResultados(query);
-        }
-
-        function mostrarDetalle(tipoFalla) {
-            const textarea = document.getElementById('reportContent');
-            const contenido = contenidoEditado[tipoFalla] || reportes[tipoFalla];
-            textarea.value = contenido;
-            textarea.dataset.tipoFalla = tipoFalla;
-            textarea.readOnly = false;
-            document.getElementById('searchResults').style.display = 'none';
-        }
-
-        function borrarContenido() {
-            const textarea = document.getElementById('reportContent');
-            const tipoFalla = textarea.dataset.tipoFalla;
-            if (tipoFalla) {
-                textarea.value = reportes[tipoFalla];
-                textarea.readOnly = false; // Permitir edición después de borrar
-                delete contenidoEditado[tipoFalla];
-                localStorage.setItem('contenidoEditado', JSON.stringify(contenidoEditado));
-            }
-        }
-
-        function copiarContenido() {
-            const textarea = document.getElementById('reportContent');
-            textarea.select();
-            document.execCommand('copy');
-        }
-
-        document.getElementById('reportContent').addEventListener('input', (e) => {
-            const tipoFalla = e.target.dataset.tipoFalla;
-            if (tipoFalla) {
-                contenidoEditado[tipoFalla] = e.target.value;
-                localStorage.setItem('contenidoEditado', JSON.stringify(contenidoEditado));
-            }
-        });
-
-        function agregarReportes() {
-            const input = document.getElementById('nuevosReportesInput').value.trim();
-            const reportesArray = input.split('+');
-
-            reportesArray.forEach(reporte => {
-                const [tipoFalla, contenido] = reporte.split('_').map(str => str.trim());
-
-                if (tipoFalla && contenido) {
-                    reportes[tipoFalla.toUpperCase()] = contenido;
-                }
-            });
-
-            localStorage.setItem('reportes', JSON.stringify(reportes));
-            document.getElementById('nuevosReportesInput').value = '';
-            alert('Reportes agregados correctamente.');
-            mostrarResultados(document.getElementById('searchInput').value);
-        }
-
-        function borrarTodosLosReportes() {
-            if (confirm("¿Estás seguro de que deseas borrar todos los reportes? Esta acción no se puede deshacer.")) {
-                localStorage.removeItem('reportes');
-                reportes = {}; // Reinicia el objeto de reportes
-                mostrarResultados(document.getElementById('searchInput').value);
-                alert("Todos los reportes han sido borrados.");
-            }
-        }
-    </script>
-      <div style="text-align: left;"> 
-
-
-    <!-- Botón único para Iniciar y Borrar -->
     
-    
-    
-
-
-    
-    <button id="controlBtn">Iniciar</button>
-    <textarea id="textArea" readonly="readonly" style="height: 128px; width: 454px;"></textarea>
-
-    <script>
-        const controlBtn = document.getElementById('controlBtn');
-        const textArea = document.getElementById('textArea');
-
-        const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-        recognition.lang = 'es-ES';
-        recognition.interimResults = false;
-        recognition.continuous = true;
-
-        let lastTranscript = '';
-        let isRecording = false;
-
-        recognition.onresult = function(event) {
-            let currentTranscript = event.results[event.results.length - 1][0].transcript.trim();
-            
-            if (currentTranscript !== lastTranscript) {
-                textArea.value = currentTranscript + '\n' + textArea.value;
-                lastTranscript = currentTranscript;
-            }
-        };
-
-        recognition.onerror = function(event) {
-            console.error('Error en el reconocimiento de voz:', event.error);
-        };
-
-        recognition.onend = function() {
-            isRecording = false;
-            controlBtn.textContent = 'Iniciar';
-        };
-
-        controlBtn.addEventListener('click', () => {
-            if (!isRecording) {
-                // Iniciar grabación
-                recognition.start();
-                isRecording = true;
-                controlBtn.textContent = 'Borrar';
-            } else {
-                // Detener grabación y limpiar
-                recognition.stop();
-                textArea.value = '';
-                lastTranscript = '';
-                isRecording = false;
-                controlBtn.textContent = 'Iniciar';
-            }
-        });
-    </script>
-
-
-
-
     
       
 
-      </div>
+    
+
+    
+
 </td>
-      <td style="vertical-align: top; width: 522px; height: 556px;">
+      <td style="vertical-align: top; width: 522px; height: 516px;">
       
       
 
@@ -1509,7 +2650,7 @@ body {
 
     
     
-      <div style="position: absolute; left: 25px; top: 4737px; width: 555px;"><textarea id="inputText" placeholder="TEXTOS DE AUTOCOPIADO"></textarea><button onclick="generateButtons()">Generar</button><br>
+      <div style="position: absolute; left: 13px; top: 4456px; width: 555px;"><textarea id="inputText" placeholder="TEXTOS DE AUTOCOPIADO"></textarea><button onclick="generateButtons()">Generar</button><br>
       </div>
 
     
@@ -1565,7 +2706,7 @@ body {
 </div>
 
 <div style="text-align: right;">
-<div id="reloj">6:36:53 PM</div>
+<div id="reloj">2:02:46 PM</div>
 
 <script>
         function actualizarReloj() {
@@ -1613,7 +2754,7 @@ body {
         <a href="https://onuris.sharepoint.com/sites/PortalResidencial/SitePages/Incidencias-Soporte-T%C3%A9cnico.aspx" target="_blank" class="boton">Incidencias</a>
         <a href="https://auth.gruposalinas.com.mx/oauth2/v1/authorize?client_id=okta.2b1959c8-bcc0-56eb-a589-cfcfb7422f26&amp;code_challenge=y-IQAVipA0qpOT1gwy4I3c-LrKEefNwVmFSTOKhGDEA&amp;code_challenge_method=S256&amp;nonce=VXVwgR9vnua8OOyNkOy40QYOkulNzqU88dgnwT62pvHrDBDjHgs8vzwfCTqisNZW&amp;redirect_uri=https%3A%2F%2Fauth.gruposalinas.com.mx%2Fenduser%2Fcallback&amp;response_type=code&amp;state=u9y1EvNNaykbxClcwD6p0vGFuMqLGLTxipZk93sgTchHdQtAn2Gpc7oFNpVY3lKZ&amp;scope=openid%20profile%20email%20okta.users.read.self%20okta.users.manage.self%20okta.internal.enduser.read%20okta.internal.enduser.manage%20okta.enduser.dashboard.read%20okta.enduser.dashboard.manage%20okta.myAccount.sessions.manage" target="_blank" class="boton">Portal OPKA</a>
         <a href="https://totalplay.lightning.force.com/one/one.app" target="_blank" class="boton">Salesforce</a>
-        <a href="https://atencionaclientes.totalplay.com.mx/busquedaGetTicketOS?cuentaBRM=0000000000&tipo=cuenta&folio=&business=" class="boton">Dashboard</a>
+        <a href="https://atencionaclientes.totalplay.com.mx/busquedaGetTicketOS?cuentaBRM=0000000000&amp;tipo=cuenta&amp;folio=&amp;business=" class="boton">Dashboard</a>
         <a href="https://ux.totalplay.com.mx/UXKeyDSI/acceso?code=Xw0CxVPTL0M4p4iuhU4hz_K4xGOhJwaJBX8fCN6PrOk&amp;state=validacion" _blank="" class="boton">UX</a>
         <a href="https://iptvmanager.totalplay.com.mx/TPADMINWeb/" target="_blank" class="boton">IPTV</a>
         <a href="https://forms.office.com/Pages/ResponsePage.aspx?id=LdVIVLj7hUKNb6pnRTvFDAQmnyff085EtJJwBmO7ZbdUMVkxMk1DVUs3UEw2RkRZWkVDQlFUTkJLQiQlQCN0PWcu" target="_blank" class="boton">Punteo</a>
@@ -1632,7 +2773,6 @@ body {
     <a href="https://copilot.microsoft.com/chats/MqfBEs3AuZzdvJ22QJAjk" target="_blank" class="boton">Copilot</a>
 	    <a href="https://plantillas-net.github.io/Url/" target="_blank" class="boton"> Url imagenes</a>
     <a href="https://plantillas-net.github.io/Mensajeria" target="_blank" class="boton">Mensajeria</a>
-	    <a href="https://drive.google.com/file/d/1A_1cTset40ygoiLQtJVqQSisKutkr0aY/view?usp=drive_link" target="_blank" class="boton">Grabador</a>
 	    <a href="https://plantillas-net.github.io/trabajo/" target="_blank" class="boton">Plantilla</a>
 </div>
 
@@ -1845,37 +2985,7 @@ body {
  <span style="font-weight: bold;"></span><br>
 
 
-<span style="font-weight: bold;">
-</span><br>
-
-<br>
-
-<br>
-
-<br>
-
-<br>
-
-<br>
-
-<span style="font-weight: bold;"></span> <br>
-
-<br>
-
-
-
-
     
-    
-    
-    <script>
-        window.addEventListener("beforeunload", function (event) {
-            event.preventDefault();
-            event.returnValue = ""; // Mensaje  en navegadores  
-        });
-    </script>
-
-    <!-- Contenido  página HTML -->
     <h1> </h1>
     
 
