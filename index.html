@@ -2161,7 +2161,10 @@ outline: none;
       padding: 0.5rem 0;
       outline: none;
     }
-  </style></head><body>
+  </style></head>
+
+
+<body>
 
 
 
@@ -2702,38 +2705,53 @@ buscarLista1();
 
 
 </div>
-<div style="position: absolute; left: 654px; top: 426px;">
+<div style="text-align: left;"><div id="reloj" style="border: 1px solid rgb(204, 204, 204); padding: 4px 8px; position: fixed; top: 10px; left: 50%; font-size: 18px; font-family: Courier,monospace; background-color: white; color: black; cursor: move; z-index: 9999;">
+  00:00:00
 </div>
 
-<div style="text-align: right;">
-<div id="reloj">2:02:46 PM</div>
-
 <script>
-        function actualizarReloj() {
-            var ahora = new Date();
-            var horas = ahora.getHours();
-            var minutos = ahora.getMinutes();
-            var segundos = ahora.getSeconds();
-            var periodo = horas >= 12 ? 'PM' : 'AM';
+(function(){
+  function actualizarReloj() {
+    const ahora = new Date();
+    let h = ahora.getHours();
+    const m = ahora.getMinutes();
+    const s = ahora.getSeconds();
+    h = h % 12 || 12;
+    const formato = n => n.toString().padStart(2, '0');
+    document.getElementById('reloj').textContent =
+      `${formato(h)}:${formato(m)}:${formato(s)}`;
+  }
 
-            horas = horas % 12;
-            horas = horas ? horas : 12; // El '0' se convierte en '12'
-            minutos = minutos < 10 ? '0' + minutos : minutos;
-            segundos = segundos < 10 ? '0' + segundos : segundos;
+  setInterval(actualizarReloj, 1000);
+  actualizarReloj();
 
-            var horaActual = horas + ':' + minutos + ':' + segundos + ' ' + periodo;
-            document.getElementById('reloj').textContent = horaActual;
-        }
+  const reloj = document.getElementById("reloj");
+  let offsetX = 0, offsetY = 0, isDragging = false;
 
-        //   reloj cada segundo
-        setInterval(actualizarReloj, 1000);
+  reloj.addEventListener("mousedown", function(e) {
+    isDragging = true;
+    offsetX = e.clientX - reloj.offsetLeft;
+    offsetY = e.clientY - reloj.offsetTop;
+  });
 
-        //  reloj cuando se carga  
-        actualizarReloj();
-    </script></div>
+  document.addEventListener("mouseup", function() {
+    isDragging = false;
+  });
 
-<br>
-<br>
+  document.addEventListener("mousemove", function(e) {
+    if (isDragging) {
+      reloj.style.left = (e.clientX - offsetX) + "px";
+      reloj.style.top = (e.clientY - offsetY) + "px";
+      reloj.style.transform = "";
+    }
+  });
+})();
+</script>
+
+
+
+
+</div>
 <br>
 <br>
 <br>
